@@ -9,6 +9,31 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: "/course",
+    name: "course",
+    component: () => import("../views/course.vue")
+  },
+  {
+    path: "/record",
+    name: "record",
+    component: () => import("../views/record.vue")
+  },
+  {
+    path: "/practice",
+    name: "practice",
+    component: () => import("../views/practice.vue")
+  },
+  {
+    path: "/mine",
+    name: "mine",
+    component: () => import("../views/mine.vue")
+  },
+  {
+    path: "/login",
+    name: "login",
+    component: () => import("../views/login.vue")
   }
 ]
 
