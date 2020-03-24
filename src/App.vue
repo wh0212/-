@@ -20,4 +20,9 @@ export default {
 
 <style>
 @import "./styles/iconfont.wxss";
+body{
+  background: rgb(243, 243, 243);
+  margin:0px;
+  padding: 0px;
+}
 </style>
