@@ -73,6 +73,7 @@ export default {
       font-weight: 500;
       .iconfont {
         color: orange;
+        font-size: 17px;
       }
     }
   }

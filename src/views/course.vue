@@ -8,10 +8,28 @@
       <van-dropdown-menu>
         <van-dropdown-item v-model="value1" title="分类">
           <div class="about">
-            <p>年级</p>
-            <ul>
-              <li v-for="(item,index) in 4" :key="index">{{index}}</li>
-            </ul>
+            <div>
+              <p>{{list.name}}</p>
+              <ul>
+                <li
+                  @click="choose(index)"
+                  :class="{'active':index===act}"
+                  v-for="(item,index) in list.child"
+                  :key="index"
+                >{{item.name}}</li>
+              </ul>
+            </div>
+            <div >
+              <p>{{list2.name}}</p>
+              <ul>
+                <li
+                  @click="choose2(index)"
+                  :class="{'active':index===act2}"
+                  v-for="(item,index) in list2.child"
+                  :key="index"
+                >{{item.name}}</li>
+              </ul>
+            </div>
           </div>
           <van-divider />
           <div class="btn">
@@ -28,6 +46,7 @@
 
 <script>
 import { Icon, DropdownMenu, DropdownItem, Button, Divider } from "vant";
+import { courseify } from "../request/http";
 export default {
   components: {
     [Icon.name]: Icon,
@@ -40,20 +59,51 @@ export default {
     return {
       value1: 0,
       value2: "a",
-      value3: 0
+      value3: 0,
+      list: {},
+      list2: {},
+      act: null,
+      act2: null
     };
+  },
+  mounted() {
+    courseify().then(res => {
+      // console.log(res.data.data);
+      const { attrclassify } = res.data.data;
+      this.list= attrclassify[0],
+      console.log(this.list);
+      
+      this.list2=attrclassify[1]
+    })
+  },
+  methods: {
+    ok() {
+      console.log(this.value2);
+    },
+    choose(index) {
+      console.log(index);
+      this.act = index;
+    },
+    choose2(index) {
+      console.log(index);
+      this.act2 = index;
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
 @import "../assets/CSS/index.scss";
-
+.active {
+  background: #ebeefe !important;
+  color: #eb6100 !important;
+}
 .about {
   @include Wm(95%);
   ul {
     display: flex;
-    justify-content: space-around;
+    // justify-content: space-around;
+    flex-wrap: wrap;
     li {
       width: 2rem;
       height: 0.8rem;

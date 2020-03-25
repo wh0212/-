@@ -38,11 +38,6 @@ const routes = [
         path: "/mine",
         name: "mine",
         component: () => import("../views/mine.vue")
-      },
-      {
-        path: "/custmoer",
-        name: "custmoer",
-        component: () => import("../views/customer.vue")
       }
     ]
   },
@@ -61,6 +56,11 @@ const routes = [
     name: "courceDetail",
     component: () => import("../views/courceDetail.vue")
   },
+  {
+    path: "/custmoer",
+    name: "custmoer",
+    component: () => import("../views/customer.vue")
+  }
 ]
 
 const router = new VueRouter({
