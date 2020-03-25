@@ -38,24 +38,24 @@ export default {
 @import "../../assets/CSS/index.scss";
 .kinds {
   width: 90%;
-  height: 3rem;
+  height: 103px;
   margin: 0 auto;
   position: relative;
-  top: -0.7rem;
-  margin-bottom: -.7rem;
+  top: -25px;
+  margin-bottom: -20px;
   ul {
     @include FlexSpace();
   }
 }
 .kinds_item {
-  width: 2.8rem;
-  height: 2.8rem;
+  width: 103px;
+  height: 103px;
   @include BgC(#fff, #8c8c8c);
   border-radius: 10px;
   text-align: center;
   @include FlexMenu();
   .iconfont {
-    font-size: 0.65rem;
+    font-size: 30px;
   }
   .icon-shuben {
     color: #5251da;

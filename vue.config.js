@@ -1,3 +1,5 @@
+const autoprefixer = require('autoprefixer');
+const pxtorem = require('postcss-pxtorem');
 module.exports = {
     outputDir: 'dist',  //build输出目录
     assetsDir: 'assets', //静态资源目录（js, css, img）
@@ -17,5 +19,22 @@ module.exports = {
                 }
             },
         },
+    },
+    css: {
+        loaderOptions: {
+            postcss: {
+                plugins: [
+                    autoprefixer({
+                        overrideBrowserslist: ['Android >= 4.0', 'iOS >= 7']
+                    }),
+                    pxtorem({
+                        rootValue: 37.5,
+                        propList: ['*'],
+                        unitPrecision: 3,
+                        minPixelValue: 2
+                    })
+                ]
+            }
+        }
     }
 }
