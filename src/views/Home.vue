@@ -1,43 +1,36 @@
 <template>
   <div class="home">
-    <van-swipe class="my-swipe" :autoplay="3000" :show-indicators="false">
-      <van-swipe-item v-for="(item,index) in list" :key="index">
-        <img class="banner_image" :src="item" alt />
-      </van-swipe-item>
-    </van-swipe>
-    <Kinds />
-    <Cart :title= "'名师阵容'" />
-    <Cart :title= "'精品课程'" />
+    <router-view />
+    <van-button class="Customer" to="/custmoer" size="normal" round type="info">
+      <i class="iconfont icon-xin"></i>
+    </van-button>
+    <Tabbar />
   </div>
 </template>
 
 <script>
-import { Swipe, SwipeItem } from "vant";
-import Kinds from "../components/home/kinds";
-import Cart from "../components/home/Card";
+import Tabbar from "../components/Tabbar";
+import { Button } from "vant";
 export default {
   name: "Home",
   components: {
-    Kinds,
-    Cart,
-    [Swipe.name]: Swipe,
-    [SwipeItem.name]: SwipeItem
-  },
-  data() {
-    return {
-      list: [
-        "https://msmk2019.oss-cn-shanghai.aliyuncs.com/uploads/image/20197Cxc53hktC1569839552.jpg",
-        "https://msmk2019.oss-cn-shanghai.aliyuncs.com/uploads/image/20193KAjU2cB6h1569839562.jpg",
-        "https://msmk2019.oss-cn-shanghai.aliyuncs.com/uploads/image/2019LnKumseuhw1569839569.jpg"
-      ]
-    };
+    Tabbar,
+    [Button.name]: Button
   },
   mounted() {}
 };
 </script>
 
 <style lang="scss" scoped>
-.banner_image {
-  width: 100%;
+
+.iconfont {
+  font-size: 0.7rem;
+}
+.Customer {
+  position: fixed;
+  bottom: 2rem;
+  right: 0.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 </style>
