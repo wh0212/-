@@ -31,3 +31,10 @@ export const courseify = () => Request({
     url: `/api/courseClassify`,
     method: "GET"
 })
+
+//分类-分页?page=1&limit=10
+export const coursebasis = (data) => Request({
+    url: `/api/courseBasis`,
+    method: "GET",
+    params:data
+})

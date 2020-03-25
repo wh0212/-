@@ -1,7 +1,14 @@
 <template>
   <div id="app">
     <router-view />
-    <van-button class="Customer" to="/custmoer" size="normal" round type="info">
+    <van-button
+      v-show="$store.active"
+      class="Customer"
+      to="/custmoer"
+      size="normal"
+      round
+      type="info"
+    >
       <i class="iconfont icon-xin"></i>
     </van-button>
   </div>
@@ -33,6 +40,6 @@ export default {
   bottom: 80px;
   right: 10px;
   width: 60px;
-  height:60px;
+  height: 60px;
 }
 </style>

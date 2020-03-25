@@ -6,7 +6,17 @@ import store from './store'
 // import 'vant/lib/index.css';
 
 import 'lib-flexible'
+router.beforeEach((to,from,next)=>{
 
+  if (to.fullPath==="/custmoer") {
+    localStorage.setItem("actbtn",false)
+    store.active= false
+  }else{
+    localStorage.setItem("actbtn",true)
+    store.active = true
+  }
+  next()
+})
 Vue.config.productionTip = false
 // Vue.use(Vant);
 new Vue({
