@@ -74,65 +74,80 @@ export default {
       sank: [
         {
           title: "综合排序",
-          act: true
+          act: true,
+          id: 0
         },
         {
           title: "最新",
-          act: false
+          act: false,
+          id: 1
         },
         {
           title: "最热",
-          act: false
+          act: false,
+          id: 2
         },
         {
           title: "价格从低到高",
-          act: false
+          act: false,
+          id: 3
         },
         {
           title: "价格从高到低",
-          act: false
+          act: false,
+          id: 4
         }
       ],
       screen: [
         {
           title: "全部",
-          isActive: true
+          isActive: true,
+          id:0
         },
         {
           title: "大班课",
-          isActive: false
+          isActive: false,
+          id:2
         },
         {
           title: "小班课",
-          isActive: false
+          isActive: false,
+          id:3
         },
         {
           title: "公开课",
-          isActive: false
+          isActive: false,
+          id:4
         },
         {
           title: "点播课",
-          isActive: false
+          isActive: false,
+          id:5
         },
         {
           title: "面授课",
-          isActive: false
+          isActive: false,
+          id:6
         },
         {
           title: "音频课",
-          isActive: false
+          isActive: false,
+          id:7
         },
         {
           title: "系统课",
-          isActive: false
+          isActive: false,
+          id:8
         },
         {
           title: "图文课",
-          isActive: false
+          isActive: false,
+          id:9
         },
         {
           title: "会员课",
-          isActive: false
+          isActive: false,
+          id:10
         }
       ]
     };
@@ -146,10 +161,8 @@ export default {
   },
   mounted() {
     courseify().then(res => {
-      // console.log(res.data.data);
       const { attrclassify } = res.data.data;
-      (this.list = attrclassify[0]), console.log(this.list);
-      this.list2 = attrclassify[1];
+      (this.list = attrclassify[0]), (this.list2 = attrclassify[1]);
     });
   },
   methods: {
@@ -157,6 +170,7 @@ export default {
       this.screen.map(v =>
         v.title === item.title ? (v.isActive = true) : (v.isActive = false)
       );
+      this.$emit("sreen",item.id)
       this.$refs.scrItem.toggle();
     },
     reset() {
@@ -168,6 +182,7 @@ export default {
       this.sank.map(v =>
         v.title === item.title ? (v.act = true) : (v.act = false)
       );
+      this.$emit("course",item.id)
       this.$refs.rankItem.toggle();
     },
     ok() {

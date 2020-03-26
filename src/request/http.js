@@ -38,3 +38,12 @@ export const coursebasis = (data) => Request({
     method: "GET",
     params:data
 })
+
+//约课 app/oto/myInviteCourse/index
+
+//登录 /login
+export const login = (data) => Request({
+    url: `/api/login`,
+    method: "POST",
+    params:data
+})

@@ -5,11 +5,11 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    active:true
+    courseList:[]
   },
   mutations: {
-    act(state){
-      state.active= false
+    course(state,data){
+      state.courseList = data
     }
   },
   actions: {
