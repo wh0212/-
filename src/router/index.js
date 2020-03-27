@@ -60,6 +60,21 @@ const routes = [
     path: "/custmoer",
     name: "custmoer",
     component: () => import("../views/customer.vue")
+  },
+  {
+    path: "/oto",
+    name: "oto",
+    component: () => import("../views/index/oto.vue")
+  },
+  {
+    path: "/calendar",
+    name: "calendar",
+    component: () => import("../views/index/Calendar.vue")
+  },
+  {
+    path: "/swiperid",
+    name: "swiperid",
+    component: () => import("../views/index/swiperId.vue")
   }
 ]
 

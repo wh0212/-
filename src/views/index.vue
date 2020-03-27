@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="swiper">
-      <van-swipe class="my-swipe" :autoplay="3000" :show-indicators="false">
-        <van-swipe-item v-for="(item,index) in list" :key="index">
-          <img class="banner_image" :src="item" alt />
+      <van-swipe  class="my-swipe" :autoplay="3000" :show-indicators="false">
+        <van-swipe-item @click="swiper(item)" v-for="(item,index) in list" :key="index">
+          <img class="banner_image" :src="item.banner_img" alt />
         </van-swipe-item>
       </van-swipe>
     </div>
@@ -11,9 +11,7 @@
       <Kinds />
     </div>
     <Cart :data="item" v-for="(item,index) in cartlist" :key="index"></Cart>
-    <div class="bottom">
-
-    </div>
+    <div class="bottom"></div>
   </div>
 </template>
 
@@ -21,7 +19,7 @@
 import { Swipe, SwipeItem } from "vant";
 import Kinds from "../components/home/kinds";
 import Cart from "../components/home/Card";
-import { appIndex } from "../request/http";
+// import { appIndex,banner } from "../request/http";
 export default {
   components: {
     Kinds,
@@ -30,29 +28,45 @@ export default {
     [SwipeItem.name]: SwipeItem
   },
   mounted() {
-    appIndex().then(res => {
-        // console.log(res.data.data);
-        
-      this.cartlist = res.data.data;
+    this.getBaner();
+
+    this.$http.get("/recommend/appIndex").then(res => {
+      // console.log(res);
+
+      this.cartlist = res;
     });
   },
   data() {
     return {
       cartlist: [],
-      list: [
-        "https://msmk2019.oss-cn-shanghai.aliyuncs.com/uploads/image/20197Cxc53hktC1569839552.jpg",
-        "https://msmk2019.oss-cn-shanghai.aliyuncs.com/uploads/image/20193KAjU2cB6h1569839562.jpg",
-        "https://msmk2019.oss-cn-shanghai.aliyuncs.com/uploads/image/2019LnKumseuhw1569839569.jpg"
-      ]
+      list: []
     };
+  },
+  methods: {
+    getBaner() {
+      // console.log(this.$http);
+      this.$http.get(`/banner`).then(res => {
+        console.log(res);
+        this.list = res;
+      });
+    },
+    swiper(e){
+      console.log(e);
+      this.$router.push({
+        path:"/swiperid",
+        query:{
+          id:e.link_content
+        }
+      })
+    }
   }
 };
 </script>
 
 
 <style lang="scss" scoped>
-.bottom{
-    height: 60px;
+.bottom {
+  height: 60px;
 }
 .swiper {
   overflow: hidden;

@@ -66,7 +66,11 @@ export default {
   },
   data() {
     return {
-      curce: {},
+      curce: {
+        info:{
+          title:""
+        }
+      },
       handeract: true
     };
   },

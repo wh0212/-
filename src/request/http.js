@@ -1,14 +1,12 @@
 import Request from "../util/request"
+import Fetch from "../util/fetch"
+export const banner = () => Fetch(
+    "/banner"
+)
 
-export const banner = () => Request({
-    url: "/api/banner"
-})
-
-
-export const appIndex = () => Request({
-    url: "/api/recommend/appIndex",
-    method: "GET"
-})
+export const appIndex = () => Fetch(
+    "/recommend/appIndex"
+)
 
 //讲师详情
 export const teacherId = (data) => Request({
@@ -36,7 +34,7 @@ export const courseify = () => Request({
 export const coursebasis = (data) => Request({
     url: `/api/courseBasis`,
     method: "GET",
-    params:data
+    params: data
 })
 
 //约课 app/oto/myInviteCourse/index
@@ -45,5 +43,11 @@ export const coursebasis = (data) => Request({
 export const login = (data) => Request({
     url: `/api/login`,
     method: "POST",
-    params:data
+    params: data
 })
+
+//oto列表 app/otoCourse?page=1&limit=10&attr_val_id=6&
+export const oto = (data) => Fetch("/otoCourse",data)
+
+//oto选择老师条件 /app/otoCourseOptions?
+export const otoconditon = () => Fetch("/otoCourseOptions")

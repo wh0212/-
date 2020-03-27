@@ -1,10 +1,10 @@
 <template>
   <div class="kinds">
     <ul>
-      <li v-for="(item,index) in kindsList" :key="index" class="kinds_item">
+      <router-link tag="li" :to="item.route" v-for="(item,index) in kindsList" :key="index" class="kinds_item">
         <i :class="[item.kindsIcon,icon]"></i>
         <p>{{item.title}}</p>
-      </li>
+      </router-link>
     </ul>
   </div>
 </template>
@@ -17,15 +17,18 @@ export default {
       kindsList: [
         {
           kindsIcon: "icon-shuben",
-          title: "特色课"
+          title: "特色课",
+          route:"/course"
         },
         {
           kindsIcon: "icon-tucao2",
-          title: "一对一辅导"
+          title: "一对一辅导",
+          route:"/oto"
         },
         {
           kindsIcon: "icon-xuexirili",
-          title: "学习日历"
+          title: "学习日历",
+          route:"/calendar"
         }
       ]
     };

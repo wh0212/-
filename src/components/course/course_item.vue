@@ -36,7 +36,9 @@ export default {
     return {
       currentpage: 0,
       lastpage: 5,
-      list: []
+      list: [
+        
+      ]
     };
   },
   mounted() {

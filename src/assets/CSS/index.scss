@@ -48,6 +48,12 @@ $fontColor:white;
   align-items: center;
 }
 
+@mixin FlexArroud() {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
 // 单纯的padding
 @mixin Pd($x...) {
   padding: $x;
