@@ -42,7 +42,7 @@ export default {
     };
   },
   mounted() {
-    console.log(this.curseData);
+    // console.log(this.curseData);
     
   },
   methods: {

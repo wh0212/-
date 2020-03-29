@@ -76,7 +76,7 @@ export default {
   },
   mounted() {
     courceId(this.$route.query.id).then(res => {
-      console.log(res.data.data);
+      // console.log(res.data.data);
       this.curce = res.data.data;
     });
   },

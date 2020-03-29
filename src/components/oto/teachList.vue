@@ -1,7 +1,7 @@
 <template>
   <div class="content_teacher">
     <ul>
-      <li v-for="(item,index) in list" :key="index">
+      <li @click="makedetail(item)" v-for="(item,index) in list" :key="index">
         <p class="buddha">
           <img :src="item.avatar" alt />
         </p>
@@ -22,7 +22,18 @@
 
 <script>
 export default {
-  props:["list"]
+  props:["list"],
+  methods:{
+    makedetail(v){
+      console.log(v);
+      this.$router.push({
+        path:"/otoplan",
+        query:{
+          id:v.teacher_id
+        }
+      })
+    }
+  }
 };
 </script>
 

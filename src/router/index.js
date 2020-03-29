@@ -75,6 +75,11 @@ const routes = [
     path: "/swiperid",
     name: "swiperid",
     component: () => import("../views/index/swiperId.vue")
+  },
+  {
+    path: "/otoplan",
+    name: "otoplan",
+    component: () => import("../views/oto/makedetail.vue")
   }
 ]
 

@@ -68,12 +68,12 @@ export default {
   mounted() {
     
     this.$http.get('/otoCourse').then(res => {
-      console.log(res);
+      // console.log(res);
       this.otoList = res;
     });
   
     this.$http.get('/otoCourseOptions').then(res => {
-      console.log(res);
+      // console.log(res);
       this.conditionobj = res
     });
   },

@@ -25,7 +25,7 @@
           </li>
         </ul>
       </div>
-      <van-button class="btn" type="info">信息按钮</van-button>
+      <van-button class="btn" type="info">提交</van-button>
     </div>
     
   </div>

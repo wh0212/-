@@ -94,7 +94,7 @@ export default {
   },
   mounted() {
     this.$http.get(`/courseInfo/basis_id=${this.$route.query.id}`).then(res => {
-      console.log(res);
+      // console.log(res);
       this.data = res;
     });
     window.addEventListener("scroll", this.handleScroll);
@@ -112,7 +112,7 @@ export default {
         window.pageYOffset ||
         document.documentElement.scrollTop ||
         document.body.scrollTop;
-      console.log(this.top);
+      // console.log(this.top);
     }
   },
   filters: {
