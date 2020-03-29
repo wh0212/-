@@ -1,5 +1,7 @@
 $fontColor:white;
-
+// 全局样式配置（主题色）
+$theme_color: #eb6100;
+$theme_color_light: rgba(235, 97, 0, 0.1);
 // 字体大小(加粗)
 @mixin FontSize($x) {
   font-size: $x;

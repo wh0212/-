@@ -1,7 +1,7 @@
 <template>
   <div class="hot_content">
     <div>
-      <div class="cource" v-for="(item,index) in data.list" :key="index">
+      <div @click="soure_item(item)" class="cource" v-for="(item,index) in data.list" :key="index">
         <p class="title">{{item.title}}</p>
         <p class="cource_xq">
           <van-icon class="icon" name="clock-o" />
@@ -44,43 +44,18 @@ export default {
   mounted() {
     console.log(this.curseData);
     
-    // coursebasis().then(res => {
-    //   // console.log(res.data.data);
-    //   const { current_page, list, last_page } = res.data.data;
-    //   this.lastpage = last_page;
-    //   this.currentpage = current_page;
-    //   this.list = list;
-    // });
-    // this.$nextTick(() => {
-    //   var bady = document.body;
-    //   // 获取滚动条的dom
-    //   bady.onscroll = () => {
-    //     var scrollTop =
-    //       document.documentElement.scrollTop || document.body.scrollTop;
-
-    //     var windowHeight =
-    //       document.documentElement.clientHeight || document.body.clientHeight;
-
-    //     var scrollHeight =
-    //       document.documentElement.scrollHeight || document.body.scrollHeight;
-
-    //     //  console.log("距顶部"+scrollTop+"可视区高度"+windowHeight+"滚动条总高度"+scrollHeight);
-    //     if (scrollTop + windowHeight >= scrollHeight - 10) {
-    //       // 把距离顶部的距离加上可视区域的高度 等于或者大于滚动条的总高度就是到达底部
-    //       console.log("触发了");
-
-    //       this.currentpage++;
-    //       coursebasis({ page: this.currentpage }).then(res => {
-    //         const { current_page, list, last_page } = res.data.data;
-    //         this.lastpage = last_page;
-    //         this.currentpage = current_page;
-    //         this.list = [...this.list, ...list];
-    //       });
-    //     }
-    //   };
-    // });
   },
-  methods: {},
+  methods: {
+    soure_item(v){
+      console.log(v.id);
+      this.$router.push({
+        path:"/swiperid",
+        query:{
+          id:v.id
+        }
+      })
+    }
+  },
   filters: {
     itemD(v) {
       return Tiem(v);

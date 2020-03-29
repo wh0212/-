@@ -1,9 +1,17 @@
 <template>
   <div>
     <div class="top">
-      <van-nav-bar @click-left="onClickLeft" title="课程详情" left-arrow>
+      <van-nav-bar @click-left="onClickLeft" left-arrow>
+        <template #title>
+          <span v-if="top<30">课程详情</span>
+          <div class="h_title" v-else>
+            <span>课程介绍</span>
+            <span>课程大纲</span>
+            <span>课程评价</span>
+          </div>
+        </template>
         <template #right>
-          <van-icon color="#000" size="20" name="search" />
+          <van-icon color="#000" size="20" name="exchange" />
         </template>
       </van-nav-bar>
     </div>
@@ -17,12 +25,15 @@
         </p>
         <p class="price">
           <i class="iconfont icon-jinbi"></i>
-          {{data.info.price}}
+          <span v-if="data.info.price!=0">{{data.info.price | toFixPrice}}</span>
+          <span v-else>免费</span>
         </p>
         <p class="info_xq">
           <span>共{{data.info.total_periods}}课时 | {{data.info.sales_num}}人报名</span>
         </p>
-        <p class="info_xq">开课时间：{{data.info.end_play_date | itemD}}</p>
+        <p
+          class="info_xq"
+        >开课时间：{{data.info.start_play_date | fomartTime('yyyy.MM.dd hh:mm')}} - {{data.info.end_play_date | fomartTime('yyyy.MM.dd hh:mm')}}</p>
       </div>
       <div class="actives">
         <p>活动:</p>
@@ -46,12 +57,23 @@
           </ul>
         </div>
       </div>
+      <div class="cd_tro">
+        <p class="title">课程介绍</p>
+      </div>
+      <div class="cd_list">
+        <p class="title">课程大纲</p>
+      </div>
+      <div class="cd_comment">
+        <p class="title">课程评论</p>
+        <img src="../../assets/images/empty.png" alt="">
+      </div>
+      <van-button class="course-btn" @click="submit">立即报名</van-button>
     </div>
   </div>
 </template>
 
 <script>
-import { NavBar, Icon } from "vant";
+import { NavBar, Icon, Button } from "vant";
 import Tiem from "../../util/Time";
 export default {
   name: "swiperid",
@@ -61,23 +83,36 @@ export default {
         info: {
           title: ""
         }
-      }
+      },
+      top: 0
     };
   },
   components: {
     [NavBar.name]: NavBar,
-    [Icon.name]: Icon
+    [Icon.name]: Icon,
+    [Button.name]: Button
   },
   mounted() {
-    // console.log(this.$route.query.id);
     this.$http.get(`/courseInfo/basis_id=${this.$route.query.id}`).then(res => {
       console.log(res);
       this.data = res;
     });
+    window.addEventListener("scroll", this.handleScroll);
+  },
+  destroyed() {
+    window.removeEventListener("scroll", this.handleScroll);
   },
   methods: {
     onClickLeft() {
       this.$router.go(-1);
+    },
+    submit() {},
+    handleScroll() {
+      this.top =
+        window.pageYOffset ||
+        document.documentElement.scrollTop ||
+        document.body.scrollTop;
+      console.log(this.top);
     }
   },
   filters: {
@@ -90,6 +125,60 @@ export default {
 
 
 <style lang="scss" scoped>
+.iconfont{
+  margin-right: 5px;
+}
+.h_title {
+  span {
+    padding: 0 5px;
+  }
+}
+.course-btn {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #eb6100;
+  color: #fff;
+  width: 100%;
+}
+.cd_comment {
+  width: 100%;
+  height: 180px;
+  background: #fff;
+  text-align: center;
+  margin-bottom: 60px;
+  .title {
+    text-align: left;
+    padding-left: 10px;
+    padding-top: 10px;
+    font-size: 16px;
+  }
+  img{
+    width: 90px;
+    height: 100px;
+  }
+}
+.cd_list {
+  width: 100%;
+  height: 101px;
+  background: #fff;
+  .title {
+    padding-left: 10px;
+    padding-top: 10px;
+    font-size: 16px;
+  }
+}
+.cd_tro {
+  width: 100%;
+  height: 64px;
+  background: #fff;
+  .title {
+    padding-left: 10px;
+    padding-top: 10px;
+    font-size: 16px;
+  }
+}
 .teach {
   width: 100%;
   height: 145px;
@@ -110,6 +199,7 @@ export default {
         width: 70px;
         float: left;
         margin-right: 10px;
+        text-align: center;
         .avatar {
           width: 40px;
           height: 40px;
@@ -122,6 +212,7 @@ export default {
           border-radius: 100%;
         }
         .txt {
+          margin-top: 10px;
           overflow: hidden;
           text-overflow: ellipsis;
           display: -webkit-box;
@@ -196,5 +287,6 @@ export default {
   top: 0;
   left: 0;
   right: 0;
+  z-index: 771;
 }
 </style>
