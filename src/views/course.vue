@@ -101,7 +101,10 @@ export default {
       this.$router.push("/search");
     },
     resetfun() {
-      this.beg();
+      coursebasis().then(res => {
+      this.curseData = res.data.data;
+      this.finished = false;
+    });
     },
     courseda(v) {
       this.params.order_by = v;

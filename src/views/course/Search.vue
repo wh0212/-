@@ -23,7 +23,7 @@
         </div>
       </div>
       <div v-else>
-        <van-list  finished-text="没有更多了" v-model="loading" :finished="finished" @load="onLoad">
+        <van-list   v-model="loading" :finished="finished" @load="onLoad">
           <CourseSearitem :data="classList" v-if="classList.length" />
         </van-list>
         <div class="empty" v-if="emptybool">
@@ -95,6 +95,7 @@ export default {
         .then(res => {
           this.loading = false;
           if (res.list.length == 0) {
+            this.classList=[]
             this.finished = true;
             this.emptybool = true;
             return;
