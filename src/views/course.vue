@@ -109,6 +109,7 @@ export default {
     courseda(v) {
       this.params.order_by = v;
       this.beg(this.params);
+
     },
     sreenda(v) {
       this.params.course_type = v;
@@ -122,7 +123,12 @@ export default {
     },
     attrId(v) {
       this.params.attr_val_id = v;
-      this.beg(this.params);
+     
+      coursebasis({attr_val_id:v}).then(res => {
+        this.curseData.list = res.data.data.list;
+        this.curseData.current_page = res.data.data.current_page;
+
+      });
     }
   }
 };
