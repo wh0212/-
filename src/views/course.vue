@@ -3,14 +3,14 @@
     <div class="top">
       <div class="hand">
         特色课
-        <van-icon class="icon" name="search" />
+        <van-icon @click="search" class="icon" name="search" />
       </div>
       <div>
-        <HandMenu @course="courseda" @sreen="sreenda" />
+        <HandMenu @reset="resetfun" @attr="attrId" @course="courseda" @sreen="sreenda" />
       </div>
     </div>
     <div class="content">
-      <Courseitem :data="curseData" />
+      <Courseitem :data="curseData.list" />
     </div>
     <div class="bottom"></div>
   </div>
@@ -30,37 +30,35 @@ export default {
   data() {
     return {
       curseData: {},
-      courseid:0,
-      sreenid:0
+      params: {
+        page: 1,
+        order_by: 0,
+        course_type: 0,
+        classify_id: null
+      }
     };
   },
   mounted() {
     coursebasis().then(res => {
       // console.log(res.data.data);
-      // this.lastpage = last_page;
-      // this.currentpage = current_page;
-      // this.list = list;
       this.curseData = res.data.data;
     });
     this.$nextTick(() => {
       var bady = document.body;
       // 获取滚动条的dom
       bady.onscroll = () => {
-        var scrollTop =
-          document.documentElement.scrollTop || document.body.scrollTop;
+        var scrollTop =document.documentElement.scrollTop || document.body.scrollTop;
 
-        var windowHeight =
-          document.documentElement.clientHeight || document.body.clientHeight;
+        var windowHeight =document.documentElement.clientHeight || document.body.clientHeight;
 
-        var scrollHeight =
-          document.documentElement.scrollHeight || document.body.scrollHeight;
+        var scrollHeight =document.documentElement.scrollHeight || document.body.scrollHeight;
 
         //  console.log("距顶部"+scrollTop+"可视区高度"+windowHeight+"滚动条总高度"+scrollHeight);
         if (scrollTop + windowHeight >= scrollHeight - 10) {
           // 把距离顶部的距离加上可视区域的高度 等于或者大于滚动条的总高度就是到达底部
           console.log("触发了");
-          this.curseData.current_page++;
-          coursebasis({ page: this.curseData.current_page,order_by: this.courseid,course_type:this.sreenid }).then(res => {
+          this.params.page++;
+          coursebasis(this.params).then(res => {
             const { current_page, list, last_page } = res.data.data;
             this.curseData.last_page = last_page;
             this.curseData.current_page = current_page;
@@ -71,27 +69,30 @@ export default {
     });
   },
   methods: {
+    search(){
+      this.$router.push("/search")
+    },
+    resetfun(){
+      this.beg()
+    },
     courseda(v) {
-      this.courseid= v
-      coursebasis({ page: this.curseData.current_page, order_by: v }).then(
-        res => {
-          console.log(res.data.data);
-          this.curseData.list = res.data.data.list;
-          this.curseData.current_page = res.data.data.current_page;
-        }
-      );
+      this.params.order_by = v;
+      this.beg(this.params);
     },
     sreenda(v) {
-      this.sreenid = v;
-      console.log(v);
-      
-      coursebasis({ page: this.curseData.current_page, course_type: v }).then(
-        res => {
-          console.log(res.data.data);
-          this.curseData.list = res.data.data.list;
-          this.curseData.current_page = res.data.data.current_page;
-        }
-      );
+ 
+      this.params.course_type = v;
+      this.beg(this.params);
+    },
+    beg(v) {
+      coursebasis(v).then(res => {
+        this.curseData.list = res.data.data.list;
+        this.curseData.current_page = res.data.data.current_page;
+      });
+    },
+    attrId(v) {
+      this.params.attr_val_id = v;
+      this.beg(this.params);
     }
   }
 };

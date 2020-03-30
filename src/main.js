@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 import http from "./util/fetch"
 import * as filters from  "./util/filter"
+import plugins from './util/plugins'
 import 'lib-flexible'
 router.beforeEach((to, from, next) => {
 
@@ -17,6 +18,7 @@ router.beforeEach((to, from, next) => {
   next()
 })
 Vue.prototype.$http = http;
+Vue.prototype.$pub = plugins
 Vue.config.productionTip = false
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])

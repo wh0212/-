@@ -1,7 +1,7 @@
 <template>
   <div class="hot_content">
     <div>
-      <div @click="soure_item(item)" class="cource" v-for="(item,index) in data.list" :key="index">
+      <div @click="soure_item(item)" class="cource" v-for="(item,index) in data" :key="index">
         <p class="title">{{item.title}}</p>
         <p class="cource_xq">
           <van-icon class="icon" name="clock-o" />
@@ -67,6 +67,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../assets/CSS/index.scss";
+
 .cource_bottom {
   display: flex;
   justify-content: space-between;

@@ -3,26 +3,15 @@
     <van-dropdown-menu>
       <van-dropdown-item ref="item" title="分类">
         <div class="about">
-          <div>
-            <p>{{list.name}}</p>
+          <div v-for="(item,index) in list" :key="index">
+            <p>{{item.name}}</p>
             <ul>
               <li
-                @click="choose(index,item)"
-                :class="{'active':index===act}"
-                v-for="(item,index) in list.child"
-                :key="index"
-              >{{item.name}}</li>
-            </ul>
-          </div>
-          <div>
-            <p>{{list2.name}}</p>
-            <ul>
-              <li
-                @click="choose2(index,item)"
-                :class="{'active':index===act2}"
-                v-for="(item,index) in list2.child"
-                :key="index"
-              >{{item.name}}</li>
+                :class="attr_val_id['attr'+index] == item2.id ? 'active':''"
+                v-for="item2 in item.child"
+                :key="item2.id"
+                @click="choose(item2.id,'attr'+index)"
+              >{{item2.name}}</li>
             </ul>
           </div>
         </div>
@@ -67,8 +56,7 @@ export default {
   data() {
     return {
       value: "",
-      list: {},
-      list2: {},
+      list: [],
       act: null,
       act2: null,
       sank: [
@@ -102,54 +90,55 @@ export default {
         {
           title: "全部",
           isActive: true,
-          id:0
+          id: 0
         },
         {
           title: "大班课",
           isActive: false,
-          id:2
+          id: 2
         },
         {
           title: "小班课",
           isActive: false,
-          id:3
+          id: 3
         },
         {
           title: "公开课",
           isActive: false,
-          id:4
+          id: 4
         },
         {
           title: "点播课",
           isActive: false,
-          id:5
+          id: 5
         },
         {
           title: "面授课",
           isActive: false,
-          id:6
+          id: 6
         },
         {
           title: "音频课",
           isActive: false,
-          id:7
+          id: 7
         },
         {
           title: "系统课",
           isActive: false,
-          id:8
+          id: 8
         },
         {
           title: "图文课",
           isActive: false,
-          id:9
+          id: 9
         },
         {
           title: "会员课",
           isActive: false,
-          id:10
+          id: 10
         }
-      ]
+      ],
+      attr_val_id: {}
     };
   },
   components: {
@@ -162,7 +151,13 @@ export default {
   mounted() {
     courseify().then(res => {
       const { attrclassify } = res.data.data;
-      (this.list = attrclassify[0]), (this.list2 = attrclassify[1]);
+      console.log(attrclassify);
+      this.list = attrclassify;
+      let attr_val_id = {};
+      attrclassify.forEach((item, index) => {
+        attr_val_id["attr" + index] = 0;
+      });
+      this.attr_val_id = attr_val_id;
     });
   },
   methods: {
@@ -170,31 +165,32 @@ export default {
       this.screen.map(v =>
         v.title === item.title ? (v.isActive = true) : (v.isActive = false)
       );
-      this.$emit("sreen",item.id)
+      this.$emit("sreen", item.id);
       this.$refs.scrItem.toggle();
     },
     reset() {
-      this.act = null;
-      this.act2 = null;
+      for (let i in this.attr_val_id) {
+        this.attr_val_id[i] = 0;
+      }
+      this.$emit("reset")
       this.$refs.item.toggle();
     },
     rank(item) {
       this.sank.map(v =>
         v.title === item.title ? (v.act = true) : (v.act = false)
       );
-      this.$emit("course",item.id)
+      this.$emit("course", item.id);
       this.$refs.rankItem.toggle();
     },
     ok() {
+      //用逗号隔开
+      let attr_id = this.$pub.objToStr(this.attr_val_id, ",");
+      console.log(attr_id);
+      this.$emit("attr", attr_id);
       this.$refs.item.toggle();
     },
-    choose(index, item) {
-      console.log(index, item.name);
-      this.act = index;
-    },
-    choose2(index, item) {
-      console.log(index, item.name);
-      this.act2 = index;
+    choose(id, attr) {
+      this.$set(this.attr_val_id, attr, id);
     }
   }
 };

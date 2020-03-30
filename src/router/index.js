@@ -80,6 +80,11 @@ const routes = [
     path: "/otoplan",
     name: "otoplan",
     component: () => import("../views/oto/makedetail.vue")
+  },
+  {
+    path: "/search",
+    name: "search",
+    component: () => import("../views/course/Search.vue")
   }
 ]
 
