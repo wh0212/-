@@ -31,7 +31,7 @@
 
 <script>
 import { NavBar, Icon, Tab, Tabs } from "vant";
-// import { oto, otoconditon } from "../../request/http";
+import { oto, otoconditon } from "../../request/http";
 import TeachList from "../../components/oto/teachList";
 import Time from "../../components/oto/time";
 import Condition from "../../components/oto/condition";
@@ -62,19 +62,15 @@ export default {
           comm: "Condition"
         }
       ],
-      conditionobj:{}
+      conditionobj: {}
     };
   },
   mounted() {
-    
-    this.$http.get('/otoCourse').then(res => {
-      // console.log(res);
+    oto().then(res => {
       this.otoList = res;
     });
-  
-    this.$http.get('/otoCourseOptions').then(res => {
-      // console.log(res);
-      this.conditionobj = res
+    otoconditon().then(res => {
+      this.conditionobj = res;
     });
   },
   methods: {

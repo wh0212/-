@@ -32,17 +32,13 @@ Http.prototype.fetch = function (url, method, params = {}) {
     };
   }
 
-
-
-
-
   // config.headers = {
   //   DeviceType: 'H5',
   //   DeviceID: this.DeviceID,
   // };
-//   Toast.loading({
-//     className: 'toast-loading'
-//   });
+  //   Toast.loading({
+  //     className: 'toast-loading'
+  //   });
   if (params instanceof FormData) {
     config.body = params;
   } else {

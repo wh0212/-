@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="swiper">
-      <van-swipe  class="my-swipe" :autoplay="3000" :show-indicators="false">
+      <van-swipe class="my-swipe" :autoplay="3000" :show-indicators="false">
         <van-swipe-item @click="swiper(item)" v-for="(item,index) in list" :key="index">
           <img class="banner_image" :src="item.banner_img" alt />
         </van-swipe-item>
@@ -19,7 +19,7 @@
 import { Swipe, SwipeItem } from "vant";
 import Kinds from "../components/home/kinds";
 import Cart from "../components/home/Card";
-// import { appIndex,banner } from "../request/http";
+import {banner,cartlist} from "../request/http"
 export default {
   components: {
     Kinds,
@@ -29,12 +29,10 @@ export default {
   },
   mounted() {
     this.getBaner();
-
-    this.$http.get("/recommend/appIndex").then(res => {
-      // console.log(res);
-
+    cartlist().then(res => {
       this.cartlist = res;
     });
+    
   },
   data() {
     return {
@@ -45,19 +43,18 @@ export default {
   methods: {
     getBaner() {
       // console.log(this.$http);
-      this.$http.get(`/banner`).then(res => {
-        console.log(res);
-        this.list = res;
-      });
+      banner().then((res)=>{
+      this.list = res
+    })
     },
-    swiper(e){
+    swiper(e) {
       console.log(e);
       this.$router.push({
-        path:"/coursedet",
-        query:{
-          id:e.link_content
+        path: "/coursedet",
+        query: {
+          id: e.link_content
         }
-      })
+      });
     }
   }
 };

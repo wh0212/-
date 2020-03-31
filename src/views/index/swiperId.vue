@@ -5,13 +5,18 @@
         <template #title>
           <span v-if="top<30">课程详情</span>
           <div class="h_title" v-else>
-            <span>课程介绍</span>
-            <span>课程大纲</span>
-            <span>课程评价</span>
+            <span :class="{'active':active=='tro'}" @click="scrollTo('tro')">课程介绍</span>
+            <span :class="{'active':active=='list'}" @click="scrollTo('list')">课程大纲</span>
+            <span :class="{'active':active=='com'}" @click="scrollTo('com')">课程评价</span>
           </div>
         </template>
         <template #right>
-          <van-icon color="#000" size="20" name="exchange" />
+          <van-icon @click="show=true" color="#000" size="20" name="exchange" />
+          <van-overlay :show="show" @click.stop>
+            <div class="wrapper" @click="show=false">
+              <div class="block" />
+            </div>
+          </van-overlay>
         </template>
       </van-nav-bar>
     </div>
@@ -35,14 +40,15 @@
           class="info_xq"
         >开课时间：{{data.info.start_play_date | fomartTime('yyyy.MM.dd hh:mm')}} - {{data.info.end_play_date | fomartTime('yyyy.MM.dd hh:mm')}}</p>
       </div>
-      <div class="actives">
+      <div v-if="data.couponList.length !==0" class="actives">
         <p>活动:</p>
         <div class="vip">优惠</div>
         <p>
           领取优惠券最多可减 &nbsp;
           <i class="iconfont icon-jinbi"></i>&nbsp;10
         </p>
-        <p class="reveive">领取></p>
+        <p @click="show1=true" class="reveive">领取></p>
+        <van-popup v-model="show1" position="bottom" :style="{ height: '50%' }" />
       </div>
       <div class="teach">
         <p class="title">教学团队</p>
@@ -57,14 +63,15 @@
           </ul>
         </div>
       </div>
-      <div class="cd_tro">
+      <div id="tro" class="cd_tro">
         <p class="title">课程介绍</p>
         <div class="cd-details" v-html="data.info.course_details"></div>
       </div>
-      <div class="cd_list">
+      <div id="list" class="cd_list">
         <p class="title">课程大纲</p>
+        <Charpter :info="data.info" />
       </div>
-      <div class="cd_comment">
+      <div id="com" class="cd_comment">
         <p class="title">课程评论</p>
         <img src="../../assets/images/empty.png" alt />
       </div>
@@ -74,7 +81,8 @@
 </template>
 
 <script>
-import { NavBar, Icon, Button } from "vant";
+import Charpter from "../../components/Charpter";
+import { NavBar, Icon, Button, Overlay, Popup } from "vant";
 import Tiem from "../../util/Time";
 export default {
   name: "swiperid",
@@ -83,19 +91,26 @@ export default {
       data: {
         info: {
           title: ""
-        }
+        },
+        couponList: []
       },
-      top: 0
+      top: 0,
+      show: false,
+      show1: false,
+      active: ""
     };
   },
   components: {
+    Charpter,
     [NavBar.name]: NavBar,
     [Icon.name]: Icon,
-    [Button.name]: Button
+    [Button.name]: Button,
+    [Overlay.name]: Overlay,
+    [Popup.name]: Popup
   },
   mounted() {
     this.$http.get(`/courseInfo/basis_id=${this.$route.query.id}`).then(res => {
-      // console.log(res);
+      console.log(res);
       this.data = res;
     });
     window.addEventListener("scroll", this.handleScroll);
@@ -113,7 +128,12 @@ export default {
         window.pageYOffset ||
         document.documentElement.scrollTop ||
         document.body.scrollTop;
-      // console.log(this.top);
+    },
+    scrollTo(v) {
+      this.active = v;
+      let h = document.getElementById(`${v}`).offsetTop - 45;
+      // console.log(h);
+      document.documentElement.scrollTop = h;
     }
   },
   filters: {
@@ -126,6 +146,23 @@ export default {
 
 
 <style lang="scss" scoped>
+.active {
+  color: #333;
+  font-weight: 500;
+  font-size: 18px;
+}
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.block {
+  width: 180px;
+  height: 180px;
+  background-color: #fff;
+}
 .iconfont {
   margin-right: 5px;
 }
