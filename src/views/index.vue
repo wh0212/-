@@ -53,7 +53,7 @@ export default {
     swiper(e){
       console.log(e);
       this.$router.push({
-        path:"/swiperid",
+        path:"/coursedet",
         query:{
           id:e.link_content
         }

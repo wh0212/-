@@ -7,7 +7,7 @@ import * as filters from  "./util/filter"
 import plugins from './util/plugins'
 import 'lib-flexible'
 router.beforeEach((to, from, next) => {
-
+  document.title= to.meta.title || "每时每课"
   if (to.fullPath === "/custmoer") {
     localStorage.setItem("actbtn", false)
     store.active = false

@@ -59,13 +59,14 @@
       </div>
       <div class="cd_tro">
         <p class="title">课程介绍</p>
+        <div class="cd-details" v-html="data.info.course_details"></div>
       </div>
       <div class="cd_list">
         <p class="title">课程大纲</p>
       </div>
       <div class="cd_comment">
         <p class="title">课程评论</p>
-        <img src="../../assets/images/empty.png" alt="">
+        <img src="../../assets/images/empty.png" alt />
       </div>
       <van-button class="course-btn" @click="submit">立即报名</van-button>
     </div>
@@ -125,7 +126,7 @@ export default {
 
 
 <style lang="scss" scoped>
-.iconfont{
+.iconfont {
   margin-right: 5px;
 }
 .h_title {
@@ -154,7 +155,7 @@ export default {
     padding-top: 10px;
     font-size: 16px;
   }
-  img{
+  img {
     width: 90px;
     height: 100px;
   }
@@ -171,12 +172,16 @@ export default {
 }
 .cd_tro {
   width: 100%;
-  height: 64px;
   background: #fff;
+
   .title {
     padding-left: 10px;
     padding-top: 10px;
     font-size: 16px;
+  }
+  .cd-details {
+    padding-left: 10px;
+    padding-bottom: 10px;
   }
 }
 .teach {

@@ -101,15 +101,21 @@ export default {
       this.$router.push("/search");
     },
     resetfun() {
+      console.log(this.params);
+      this.params = {
+        page: 1,
+        order_by: 0,
+        course_type: 0,
+        classify_id: null
+      };
       coursebasis().then(res => {
-      this.curseData = res.data.data;
-      this.finished = false;
-    });
+        this.curseData = res.data.data;
+        this.finished = false;
+      });
     },
     courseda(v) {
       this.params.order_by = v;
       this.beg(this.params);
-
     },
     sreenda(v) {
       this.params.course_type = v;
@@ -123,11 +129,10 @@ export default {
     },
     attrId(v) {
       this.params.attr_val_id = v;
-     
-      coursebasis({attr_val_id:v}).then(res => {
+
+      coursebasis({ attr_val_id: v }).then(res => {
         this.curseData.list = res.data.data.list;
         this.curseData.current_page = res.data.data.current_page;
-
       });
     }
   }

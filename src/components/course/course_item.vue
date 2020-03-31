@@ -49,7 +49,7 @@ export default {
     soure_item(v){
       console.log(v.id);
       this.$router.push({
-        path:"/swiperid",
+        path:"/coursedet",
         query:{
           id:v.id
         }
