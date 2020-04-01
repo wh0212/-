@@ -112,6 +112,14 @@ const routes = [
     meta:{
       title:"搜索"
     }
+  },
+  {
+    path: "/smslogin",
+    name: "smslogin",
+    component: () => import("../views/login/SmsLogin.vue"),
+    meta:{
+      title:"验证码登录"
+    }
   }
 ]
 

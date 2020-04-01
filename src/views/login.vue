@@ -20,7 +20,11 @@
           placeholder="密码"
           :rules="[{ required: true, message: '请填写密码' }]"
         />
-        <div style="margin: 16px;">
+        <div class="others">
+          <span class="forget" @click="forgot">找回密码</span>
+          <span class="login_CAPTCHA" @click="codeLogin">注册/验证码登录</span>
+        </div>
+        <div class="btn">
           <van-button color="#fd6614" round block type="info" native-type="submit">登录</van-button>
         </div>
       </van-form>
@@ -40,6 +44,8 @@ export default {
   },
   mounted() {
     document.body.style.background = "#fff";
+    localStorage.removeItem("adminToken");
+    localStorage.removeItem("user_id");
   },
   components: {
     [Form.name]: Form,
@@ -48,6 +54,10 @@ export default {
     [Toast.name]: Toast
   },
   methods: {
+    forgot() {},
+    codeLogin() {
+      this.$router.push("/smslogin")
+    },
     onSubmit() {
       //?mobile=15083020522&password=123456&type=1
       let obj = {
@@ -59,8 +69,10 @@ export default {
         .then(res => {
           console.log(res.data);
           if (res.data.code === 200) {
+            localStorage.setItem("adminToken", res.data.remember_token);
+            localStorage.setItem("user_id", res.data.id);
             Toast.success(res.data.msg);
-            this.$router.push("/");
+            this.$router.push("/mine");
           } else if (res.data.code === 201) {
             Toast.fail(res.data.msg);
           }
@@ -75,8 +87,29 @@ export default {
 
 
 <style lang="scss" scoped>
+.btn{
+  margin-top: 50px;
+}
+.others {
+  width: 90%;
+  display: flex;
+  margin: 5px auto;
+  justify-content: space-between;
+  .forget {
+    font-size: 13px;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: rgba(153, 153, 153, 1);
+  }
+  .login_CAPTCHA {
+    font-size: 13px;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: rgba(153, 153, 153, 1);
+  }
+}
 .form {
-  width: 80%;
+  width: 83%;
   margin: 0 auto;
 }
 .logo {

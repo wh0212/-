@@ -66,3 +66,8 @@ export const oto = () => thia.$http.get("/otoCourse") //Fetch("/otoCourse", data
 
 // //oto选择老师条件 /app/otoCourseOptions?
 export const otoconditon = () => thia.$http.get("/otoCourseOptions")
+
+//发送验证码
+export const SmsVerification =(data)=> thia.$http.post('/smsCode',data)
+//验证码登录
+export const VerificationLogin = (data)=> thia.$http.post('/login',data)

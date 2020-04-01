@@ -13,8 +13,29 @@
 export default {
   data() {
     return {
-        
+      user_id: ""
     };
+  },
+  created() {
+    this.user_id = localStorage.user_id;
+    window.scrollTo(0, 0);
+    this.turnPage()
+  },
+  methods: {
+    turnPage(name, query) {
+      if (!this.user_id) {
+        // 未登录 统一推到验证码登录页面
+        this.$router.push({
+          name: "login"
+        });
+        return;
+      }
+
+      // this.$router.push({
+      //   name,
+      //   query
+      // });
+    }
   }
 };
 </script>
