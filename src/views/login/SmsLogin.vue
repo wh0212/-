@@ -40,7 +40,7 @@
 
 <script>
 import { Form, Button, Field, Toast } from "vant";
-import { SmsVerification ,VerificationLogin } from "../../request/http";
+import { SmsVerification, VerificationLogin } from "../../request/http";
 export default {
   data() {
     return {
@@ -78,10 +78,34 @@ export default {
       };
       SmsVerification(obj).then(res => {
         console.log(res);
+        this.timebool = true;
+        this.time = 60;
+        let _this = this;
+        var timer = setInterval(function() {
+          _this.time--;
+          if (_this.time <= 0) {
+            _this.timebool = false;
+            clearInterval(timer);
+          }
+        }, 1000);
       });
     },
     goLogin() {
 
+      VerificationLogin({
+        mobile: this.getsmscodeData.mobile,
+        sms_code: this.getsmscodeData.smscode,
+        type: 2
+      }).then(res => {
+        console.log(res);
+        // if (res.is_new == 1) {
+          this.$store.commit("smslogin", {
+            mobile: this.getsmscodeData.mobile,
+            sms_code: this.getsmscodeData.smscode
+          });
+          this.$router.push("/setpass");
+        // }
+      });
     }
   }
 };

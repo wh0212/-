@@ -120,6 +120,22 @@ const routes = [
     meta:{
       title:"验证码登录"
     }
+  },
+  {
+    path: "/setpass",
+    name: "setpass",
+    component: () => import("../views/login/setpass.vue"),
+    meta:{
+      title:"设置密码"
+    }
+  },
+  {
+    path: "/setmessage",
+    name: "setmessage",
+    component: () => import("../views/login/setmessage.vue"),
+    meta:{
+      title:"设置信息"
+    }
   }
 ]
 

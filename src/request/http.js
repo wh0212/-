@@ -68,6 +68,17 @@ export const oto = () => thia.$http.get("/otoCourse") //Fetch("/otoCourse", data
 export const otoconditon = () => thia.$http.get("/otoCourseOptions")
 
 //发送验证码
-export const SmsVerification =(data)=> thia.$http.post('/smsCode',data)
+export const SmsVerification = (data) => thia.$http.post('/smsCode', data)
 //验证码登录
-export const VerificationLogin = (data)=> thia.$http.post('/login',data)
+export const VerificationLogin = (data) => thia.$http.post('/login', data)
+//确认密码
+export const secondPassword = (data) => thia.$http.post('/password', data)
+//学科年级
+export const attr = () => thia.$http.get('module/attribute/1')
+//提交
+export const user = (data) => thia.$http.put('/user', data)
+
+//用户userinfo
+export const Userinfo = () => thia.$http.get('/userInfo')
+//user信息
+export const UserCenter = () => thia.$http.get('/getUCenterInfo')

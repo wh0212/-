@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="logo">
-      <img src="../assets/images/login.png" alt />
+      <img  src="../assets/images/login.png" alt />
     </div>
     <div class="form">
       <van-form @submit="onSubmit">
@@ -44,8 +44,8 @@ export default {
   },
   mounted() {
     document.body.style.background = "#fff";
-    localStorage.removeItem("adminToken");
-    localStorage.removeItem("user_id");
+    // localStorage.removeItem("adminToken");
+    // localStorage.removeItem("user_id");
   },
   components: {
     [Form.name]: Form,
@@ -69,8 +69,8 @@ export default {
         .then(res => {
           console.log(res.data);
           if (res.data.code === 200) {
-            localStorage.setItem("adminToken", res.data.remember_token);
-            localStorage.setItem("user_id", res.data.id);
+            localStorage.setItem("adminToken", res.data.data.remember_token);
+            localStorage.setItem("user_id", res.data.data.id);
             Toast.success(res.data.msg);
             this.$router.push("/mine");
           } else if (res.data.code === 201) {

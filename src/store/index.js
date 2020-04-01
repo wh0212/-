@@ -5,11 +5,15 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    courseList:[]
+    courseList: [],
+    smslogin: {}
   },
   mutations: {
-    course(state,data){
+    course(state, data) {
       state.courseList = data
+    },
+    smslogin(state, data) {
+      state.smslogin = data
     }
   },
   actions: {
