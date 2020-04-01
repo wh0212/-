@@ -91,20 +91,22 @@ export default {
       });
     },
     goLogin() {
-
       VerificationLogin({
         mobile: this.getsmscodeData.mobile,
         sms_code: this.getsmscodeData.smscode,
         type: 2
       }).then(res => {
         console.log(res);
-        // if (res.is_new == 1) {
+        localStorage.setItem("adminToken", res.remember_token);
+        localStorage.setItem("user_id", res.id);
+        //是否已注册
+        if (res.is_new == 1) {
           this.$store.commit("smslogin", {
             mobile: this.getsmscodeData.mobile,
             sms_code: this.getsmscodeData.smscode
           });
           this.$router.push("/setpass");
-        // }
+        }
       });
     }
   }

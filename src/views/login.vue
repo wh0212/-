@@ -44,8 +44,8 @@ export default {
   },
   mounted() {
     document.body.style.background = "#fff";
-    // localStorage.removeItem("adminToken");
-    // localStorage.removeItem("user_id");
+    localStorage.removeItem("adminToken");
+    localStorage.removeItem("user_id");
   },
   components: {
     [Form.name]: Form,
