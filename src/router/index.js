@@ -136,6 +136,30 @@ const routes = [
     meta:{
       title:"设置信息"
     }
+  },
+  {
+    path: "/options",
+    name: "options",
+    component: () => import("../views/mine/options.vue"),
+    meta:{
+      title:"设置信息"
+    }
+  },
+  {
+    path: "/setnewpass",
+    name: "setnewpass",
+    component: () => import("../views/mine/setnewpass.vue"),
+    meta:{
+      title:"设置密码"
+    }
+  },
+  {
+    path: "/mystudy",
+    name: "mystudy",
+    component: () => import("../views/mine/mystaus.vue"),
+    meta:{
+      title:"我的学习"
+    }
   }
 ]
 

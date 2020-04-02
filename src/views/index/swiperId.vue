@@ -82,8 +82,9 @@
 
 <script>
 import Charpter from "../../components/Charpter";
-import { NavBar, Icon, Button, Overlay, Popup } from "vant";
+import { NavBar, Icon, Button, Overlay, Popup, Toast } from "vant";
 import Tiem from "../../util/Time";
+import { apply } from "../../request/http";
 export default {
   name: "swiperid",
   data() {
@@ -106,7 +107,8 @@ export default {
     [Icon.name]: Icon,
     [Button.name]: Button,
     [Overlay.name]: Overlay,
-    [Popup.name]: Popup
+    [Popup.name]: Popup,
+    [Toast.name]: Toast
   },
   mounted() {
     this.$http.get(`/courseInfo/basis_id=${this.$route.query.id}`).then(res => {
@@ -122,7 +124,37 @@ export default {
     onClickLeft() {
       this.$router.go(-1);
     },
-    submit() {},
+    submit() {
+      let obj = {
+        shop_id: this.data.info.id,
+        type: this.data.info.course_type
+      };
+      if (this.data.info.is_free) {
+        apply(obj).then(res => {
+          console.log(res);
+          this.$toast({
+            message: "成功",
+            type: "success",
+            duration: 1000
+          });
+        });
+      } else {
+        console.log(111);
+        
+        // if (
+        //   this.data.info.stock == 0 &&
+        //   this.data.info.store_num > 0 &&
+        //   (this.data.info.course_type == 7 || this.data.info.course_type == 3)
+        // ) {
+          this.$toast({
+            message: "你来晚了哦,名额已经没有了~",
+             type: "success",
+            duration: 1500
+          });
+        //   return;
+        // }
+      }
+    },
     handleScroll() {
       this.top =
         window.pageYOffset ||

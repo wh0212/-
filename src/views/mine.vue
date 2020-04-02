@@ -16,7 +16,7 @@
         </div>
         <div class="hander_mine">
           <ul>
-            <li v-for="(item,index) in mineList" :key="index">
+            <li @click="mystatus(item)" v-for="(item,index) in mineList" :key="index">
               <p class="count">{{item.count}}</p>
               <p class="title">{{item.name}}</p>
               <p class="xq">{{item.note}}</p>
@@ -24,6 +24,90 @@
           </ul>
         </div>
       </div>
+    </div>
+    <div class="box">
+      <div>
+        <img class="box_img" src="../assets/theme-img/下载.png" alt />
+      </div>
+      <div class="box_content">
+        <p>邀请好友注册APP，享多重好礼</p>
+        <p class="content_ms">显示特惠，多邀多得</p>
+      </div>
+      <i class="iconfont icon-arrow-left"></i>
+    </div>
+    <div class="menu_box">
+      <ul>
+        <li>
+          <p class="title">课程相关</p>
+          <div class="item-box">
+            <div class="item" @click="turnPage('Concern')">
+              <img class="icon-teacher" src="~@/assets/theme-img/icon_person_teacher.png" />
+              <p>关注的老师</p>
+            </div>
+            <div class="item" @click="turnPage('Collect')">
+              <img class="icon-collect" src="~@/assets/theme-img/icon_person_collect.png" />
+              <p>我的收藏</p>
+            </div>
+          </div>
+        </li>
+        <li>
+          <p class="title">订单相关</p>
+          <div class="item-box">
+            <div class="item" @click="turnPage('Order',{order_type: 2})">
+              <img class="icon-order" src="~@/assets/theme-img/icon_person_order.png" />
+              <p>课程订单</p>
+            </div>
+            <div class="item" @click="turnPage('Order',{order_type: 3})">
+              <img class="icon-order" src="~@/assets/theme-img/icon_person_order.png" />
+              <p>会员订单</p>
+            </div>
+            <div class="item" @click="turnPage('Order',{order_type: 1})">
+              <img class="icon-order" src="~@/assets/theme-img/icon_person_order.png" />
+              <p>约课订单</p>
+            </div>
+          </div>
+        </li>
+        <li>
+          <p class="title">我的账户</p>
+          <div class="item-box">
+            <div class="item" @click="turnPage('Coupon')">
+              <img class="icon-coupon" src="~@/assets/theme-img/icon_person_coupon.png" />
+              <p>优惠券</p>
+              <span></span>
+            </div>
+            <div class="item" @click="turnPage('Card')">
+              <img class="icon-card" src="~@/assets/theme-img/icon_person_card.png" />
+              <p>学习卡</p>
+            </div>
+            <div class="item" @click="turnPage('Vip')">
+              <img class="icon-vip" src="~@/assets/theme-img/icon_person_vip.png" />
+              <p>会员</p>
+            </div>
+          </div>
+        </li>
+        <li>
+          <p class="title">自助服务</p>
+          <div class="item-box">
+            <div @click="turnPage('Message')" :class="newMessage==true?'item has_message':'item'">
+              <img class="icon-news" src="~@/assets/theme-img/icon_person_news.png" />
+              <p>我的消息</p>
+              <span></span>
+            </div>
+            <div class="item" @click="turnPage('Feedback')">
+              <img class="icon-mail" src="~@/assets/theme-img/icon_person_mail.png" />
+              <p>意见反馈</p>
+            </div>
+            <div class="item" @click="openCustom">
+              <img class="icon-custom" src="~@/assets/theme-img/icon_person_custom.png" />
+              <p>在线客服</p>
+            </div>
+            <div class="item" @click="turnPage('options')">
+              <img class="icon-custom" src="~@/assets/theme-img/icon_person_setting.png" />
+              <p>设置</p>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -57,19 +141,30 @@ export default {
           style: "my-period",
           url: "MyCurrency"
         }
-      ]
+      ],
+      newMessage: false
     };
+  },
+  mounted() {
+    document.body.style.background = "#fff";
   },
   created() {
     this.user_id = localStorage.user_id;
     window.scrollTo(0, 0);
     this.turnPage();
-
     if (this.user_id) {
       this.requestInfo();
     }
   },
   methods: {
+    mystatus(item) {
+      if (item.style == "my-study") {
+        this.$router.push("/mystudy");
+      }
+    },
+    openCustom() {
+      this.$router.push("/custmoer");
+    },
     requestInfo() {
       Userinfo().then(res => {
         console.log(res);
@@ -82,7 +177,7 @@ export default {
         console.log(res);
         this.mineList[0].count = res.courses;
         this.mineList[1].count = res.oto;
-        this.mineList[2].count = (res.integral/100).toFixed(2);
+        this.mineList[2].count = (res.integral / 100).toFixed(2);
       });
     },
     turnPage(name, query) {
@@ -93,16 +188,89 @@ export default {
         });
         return;
       }
-      // this.$router.push({
-      //   name,
-      //   query
-      // });
+      this.$router.push({
+        name: name,
+        query: {
+          query
+        }
+      });
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
+.menu_box {
+  width: 90%;
+  margin: 0 auto;
+  padding-bottom: 50px;
+  li {
+    border-bottom: 1px solid #eeeeee;
+    .title {
+      font-family: PingFangSC-Medium;
+      font-size: 16px;
+      color: #333;
+      line-height: 10px;
+    }
+    .item-box {
+      display: flex;
+      justify-content: flex-start;
+      width: 100%;
+      .item {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        flex-direction: column;
+        width: 25%;
+        height: 60px;
+        text-align: center;
+        padding-bottom: 20px;
+        img {
+          width: 20px;
+          height: 20px;
+          display: inline-block;
+        }
+        p {
+          margin-top: 20px;
+          font-size: 13px;
+          color: #666;
+          line-height: 1px;
+        }
+      }
+    }
+  }
+}
+.box {
+  width: 90%;
+  height: 44px;
+  margin: 15px auto;
+  background: url("../assets/theme-img/login-btn.png") no-repeat;
+  background-size: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .box_img {
+    width: 20px;
+    height: 20px;
+    margin-left: 20px;
+  }
+  .box_content {
+    text-align: left;
+    color: #fff;
+    width: 70%;
+    .content_ms {
+      font-size: 11px;
+    }
+    p {
+      line-height: 5px;
+    }
+  }
+  .iconfont {
+    margin-right: 20px;
+    color: #fff;
+    font-size: 20px;
+  }
+}
 .hander {
   width: 100%;
   height: 218px;

@@ -61,6 +61,8 @@ export const login = (data) => Request({
     params: data
 })
 
+//课程详情报名
+export const apply = (data) => thia.$http.post('/order/downOrder', data)
 //oto列表 app/otoCourse?page=1&limit=10&attr_val_id=6&
 export const oto = () => thia.$http.get("/otoCourse") //Fetch("/otoCourse", data)
 
@@ -82,3 +84,6 @@ export const user = (data) => thia.$http.put('/user', data)
 export const Userinfo = () => thia.$http.get('/userInfo')
 //user信息
 export const UserCenter = () => thia.$http.get('/getUCenterInfo')
+
+//我的学习
+export const mystaus = (type) => thia.$http.get(`/myStudy/${type}`)

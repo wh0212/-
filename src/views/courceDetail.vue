@@ -1,12 +1,24 @@
 <template>
   <div>
     <div class="top">
-      <van-nav-bar v-show="handeract" title="课程详情" @click-left="onClickLeft" @click-right="onClickRight" left-arrow>
+      <van-nav-bar
+        v-show="handeract"
+        title="课程详情"
+        @click-left="onClickLeft"
+        @click-right="onClickRight"
+        left-arrow
+      >
         <template #right>
           <van-icon name="cluster-o" />
         </template>
       </van-nav-bar>
-      <van-nav-bar right-text="分享" v-show="!handeract"  @click-left="onClickLeft" @click-right="onClickRight" left-arrow>
+      <van-nav-bar
+        right-text="分享"
+        v-show="!handeract"
+        @click-left="onClickLeft"
+        @click-right="onClickRight"
+        left-arrow
+      >
         <template #title>
           <ul class="hander">
             <li>课程介绍</li>
@@ -52,23 +64,24 @@
       </div>
     </div>
     <div class="comment"></div>
-    <div class="btn">立即报名</div>
+    <div @click="addapply" class="btn">立即报名</div>
   </div>
 </template>
 
 <script>
-import { courceId } from "../request/http";
-import { NavBar, Icon } from "vant";
+import { courceId, apply } from "../request/http";
+import { NavBar, Icon, Toast } from "vant";
 export default {
   components: {
     [NavBar.name]: NavBar,
-    [Icon.name]: Icon
+    [Icon.name]: Icon,
+    [Toast.name]: Toast
   },
   data() {
     return {
       curce: {
-        info:{
-          title:""
+        info: {
+          title: ""
         }
       },
       handeract: true
@@ -111,11 +124,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.hander{
-  display:flex;
+.hander {
+  display: flex;
   justify-content: space-around;
-  li{
-    padding:0 1px
+  li {
+    padding: 0 1px;
   }
 }
 .top {
