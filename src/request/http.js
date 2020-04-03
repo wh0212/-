@@ -80,6 +80,11 @@ export const attr = () => thia.$http.get('module/attribute/1')
 //提交
 export const user = (data) => thia.$http.put('/user', data)
 
+//分享
+export const share =()=> thia.$http.post('/public/share')
+//更换用户头像
+export const avatar =(data)=>thia.$http.post('/public/img',data)
+
 //用户userinfo
 export const Userinfo = () => thia.$http.get('/userInfo')
 //user信息

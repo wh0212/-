@@ -3,11 +3,23 @@
     <van-nav-bar title="信息填写" left-arrow @click-left="onClickLeft" />
     <div class="content">
       <van-cell class="cell" is-link @click="showPopup" title="昵称" :value="userinfo.nickname"></van-cell>
-      <van-cell class="cell" is-link @click="showPopup" title="性别" value="保密"></van-cell>
-      <van-cell class="cell" is-link @click="showPopup('born')" title="出生日期" value="请选择">
+      <van-cell class="cell" is-link @click="showPopup('sex')" title="性别" :value=" userinfo.sex | sexD"></van-cell>
+      <van-cell
+        class="cell"
+        is-link
+        @click="showPopup('born')"
+        title="出生日期"
+        :value="userinfo.birthday"
+      >
         <span v-if="data.time">{{data.time}}</span>
       </van-cell>
-      <van-cell class="cell" is-link @click="showPopup('city')" title="所在城市" value="请选择">
+      <van-cell
+        class="cell"
+        is-link
+        @click="showPopup('city')"
+        title="所在城市"
+        :value="userinfo.province_name+','+userinfo.city_name+','+userinfo.district_name"
+      >
         <span
           v-show="data.city.length!=0"
           v-for="(item,index) in data.city"
@@ -86,8 +98,18 @@ export default {
     [Picker.name]: Picker,
     [Popup.nmae]: Popup
   },
+  filters: {
+    sexD(v){
+      if (v==0) {
+        return "男"
+      }else if(v==1){
+        return '女'
+      }else{
+        return '保密'
+      }
+    }
+  },
   created() {
-   
     this.requestUserInfo();
     attr().then(res => {
       res.forEach(i => {
@@ -113,7 +135,8 @@ export default {
       this.act = false;
     },
     ok(v) {
-      let youWant =v.getFullYear() + "-" +(v.getMonth() + 1) + "-" + v.getDate();
+      let youWant =
+        v.getFullYear() + "-" + (v.getMonth() + 1) + "-" + v.getDate();
 
       this.data.time = youWant;
       this.act = false;
@@ -128,8 +151,8 @@ export default {
     },
     requestUserInfo() {
       Userinfo().then(res => {
-          console.log(res);
-          
+        console.log(res);
+
         this.userinfo = res;
       });
     },
@@ -146,18 +169,26 @@ export default {
       } else if (v == "grade") {
         this.show = v;
         this.act = true;
+      } else if (v === "sex") {
+        this.$router.push({
+          path: "/setinfo",
+          query: {
+            value: v,
+            name: this.userinfo.sex
+          }
+        });
       }
     },
     add() {
-        this.userinfo.birthday=this.data.time
-        this.userinfo.city_id=this.data.city[1].code
-        this.userinfo.city_name=this.data.city[1].name
-        this.userinfo.district_id=this.data.city[2].code
-        this.userinfo.district_name = this.data.city[2].name
+      this.userinfo.birthday = this.data.time;
+      this.userinfo.city_id = this.data.city[1].code;
+      this.userinfo.city_name = this.data.city[1].name;
+      this.userinfo.district_id = this.data.city[2].code;
+      this.userinfo.district_name = this.data.city[2].name;
       user(this.userinfo).then(res => {
         console.log(res);
         this.$toast("数据更新成功");
-        this.$router.push('/mine')
+        this.$router.push("/mine");
       });
     }
   }

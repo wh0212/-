@@ -160,6 +160,22 @@ const routes = [
     meta:{
       title:"我的学习"
     }
+  },
+  {
+    path: "/info",
+    name: "info",
+    component: () => import("../views/mine/info.vue"),
+    meta:{
+      title:"个人信息"
+    }
+  },
+  {
+    path: "/setinfo",
+    name: "setinfo",
+    component: () => import("../views/mine/setinfo.vue"),
+    meta:{
+      title:"修改个人信息"
+    }
   }
 ]
 

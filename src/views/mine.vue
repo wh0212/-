@@ -3,7 +3,7 @@
     <div class="hander">
       <div class="hander_content">
         <div class="hander_info">
-          <div class="avitar">
+          <div @click="avatar" class="avitar">
             <img class="user_img" :src="userinfo.avatar" alt />
             <img v-if="!user_id" class="user_img" src="../assets/images/user_Headportrait.png" alt />
             <img class="vip-logo" src="../assets/images/皇冠-2 拷贝@2x.png" alt />
@@ -12,7 +12,7 @@
             {{userinfo.mobile}} &nbsp;
             <img class="xiugai" src="../assets/images/修改@2x.png" alt />
           </div>
-          <div class="right">去约课</div>
+          <div class="right" @click="yueke">去约课</div>
         </div>
         <div class="hander_mine">
           <ul>
@@ -25,7 +25,7 @@
         </div>
       </div>
     </div>
-    <div class="box">
+    <div @click="share" class="box">
       <div>
         <img class="box_img" src="../assets/theme-img/下载.png" alt />
       </div>
@@ -109,11 +109,21 @@
         </li>
       </ul>
     </div>
+    <van-popup v-model="show">
+      <div class="share">
+        <img class="shareImage" :src="shareImg" alt />
+        <div class="finger">
+          <img src="../assets/images/icon_home_finger.png" alt />
+          <p>长按保存到相册</p>
+        </div>
+      </div>
+    </van-popup>
   </div>
 </template>
 
 <script>
-import { Userinfo, UserCenter } from "../request/http";
+import { Userinfo, UserCenter, share } from "../request/http";
+import { Popup } from "vant";
 export default {
   data() {
     return {
@@ -142,14 +152,23 @@ export default {
           url: "MyCurrency"
         }
       ],
-      newMessage: false
+      newMessage: false,
+      show: false,
+      shareImg: ""
     };
+  },
+  components: {
+    [Popup.name]: Popup
   },
   mounted() {
     document.body.style.background = "#fff";
   },
   created() {
     this.user_id = localStorage.user_id;
+    share().then(res => {
+      // console.log(res);
+      this.shareImg = res.path;
+    });
     window.scrollTo(0, 0);
     this.turnPage();
     if (this.user_id) {
@@ -157,6 +176,15 @@ export default {
     }
   },
   methods: {
+    avatar(){
+      this.$router.push("/info")
+    },
+    yueke(){
+      this.$router.push('/oto')
+    },
+    share() {
+      this.show = true;
+    },
     mystatus(item) {
       if (item.style == "my-study") {
         this.$router.push("/mystudy");
@@ -167,14 +195,14 @@ export default {
     },
     requestInfo() {
       Userinfo().then(res => {
-        console.log(res);
+        // console.log(res);
         this.userinfo = res;
         this.requestCount();
       });
     },
     requestCount() {
       UserCenter().then(res => {
-        console.log(res);
+        // console.log(res);
         this.mineList[0].count = res.courses;
         this.mineList[1].count = res.oto;
         this.mineList[2].count = (res.integral / 100).toFixed(2);
@@ -200,6 +228,34 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.share {
+  width: 335px;
+  position: relative;
+  .shareImage {
+    width: 100%;
+    display: block;
+  }
+  .finger {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    z-index: 1111;
+    img {
+      width: 35px;
+      height: 35px;
+      margin-right: 20px;
+    }
+    p {
+      font-family: PingFangSC-Medium;
+      font-size: 17px;
+      color: #fff;
+      margin-right: 30px;
+    }
+  }
+}
 .menu_box {
   width: 90%;
   margin: 0 auto;
@@ -309,6 +365,7 @@ export default {
         overflow: hidden;
         .user_img {
           width: 100%;
+          height: 100%;
         }
       }
       .phone {
