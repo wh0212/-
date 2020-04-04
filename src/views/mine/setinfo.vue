@@ -6,12 +6,20 @@
       </template>
     </van-nav-bar>
     <van-cell-group v-if="tag=='nickname'" class="nickname">
-      <van-field v-model="name" placeholder="请输入昵称" />
+      <van-field v-model="value" placeholder="请输入昵称" />
     </van-cell-group>
-    <ul class="content" v-if="tag=='sex'">
-      <li :class="{active:name==0}" @click="onSex(0)">男</li>
-      <li :class="{active:name==1}" @click="onSex(1)">女</li>
+    <ul class="content" v-else-if="tag=='sex'">
+      <li :class="{active:value==0}" @click="onSex(0)">男</li>
+      <li :class="{active:value==1}" @click="onSex(1)">女</li>
     </ul>
+    <div class="subject" v-else-if="tag == 'subjects'">
+      <ul>
+        <li v-for="(item,index) in value" :key="index">         
+          <input type="checkbox" v-model="sub" :value="item.id">
+          <span>{{item.name}}</span>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -21,9 +29,14 @@ import { NavBar, Field, CellGroup, Toast, Divider } from "vant";
 export default {
   data() {
     return {
-      name: "",
-      tag: ""
+      value: this.$route.query.value,
+      tag: this.$route.query.tag,
+      sub: this.$route.query.select ? this.$route.query.select : []
     };
+  },
+  mounted(){
+      console.log(this.$route.query.name);
+      
   },
   components: {
     [NavBar.name]: NavBar,
@@ -32,12 +45,9 @@ export default {
     [Toast.name]: Toast,
     [Divider.name]: Divider
   },
-  mounted() {
-    (this.name = this.$route.query.data), (this.tag = this.$route.query.value);
-  },
   methods: {
     onSex(v) {
-      this.name = v;
+      this.value = v;
     },
     setWood() {
       console.log(this.name);
@@ -60,7 +70,16 @@ export default {
             this.$router.go(-1);
           });
           break;
-        default:
+        case "subjects":
+          var subDate = [];
+          this.sub.forEach(res => {
+            let d = { attr_id: 2, attr_val_id: res };
+            subDate.push(d);
+          });
+          user({user_attr:JSON.stringify(subDate)}).then(()=>{
+            this.$toast("修改成功");
+            this.$router.go(-1);
+          })
           break;
       }
     },

@@ -75,8 +75,8 @@ export const SmsVerification = (data) => thia.$http.post('/smsCode', data)
 export const VerificationLogin = (data) => thia.$http.post('/login', data)
 //确认密码
 export const secondPassword = (data) => thia.$http.post('/password', data)
-//学科年级
-export const attr = () => thia.$http.get('module/attribute/1')
+//学科年级  /module/attribute/1
+export const attr = () => thia.$http.get('/module/attribute/1')
 //提交
 export const user = (data) => thia.$http.put('/user', data)
 
@@ -84,6 +84,8 @@ export const user = (data) => thia.$http.put('/user', data)
 export const share =()=> thia.$http.post('/public/share')
 //更换用户头像
 export const avatar =(data)=>thia.$http.post('/public/img',data)
+//城市
+export const city =(data)=>thia.$http.get(`/sonArea/${data}`)
 
 //用户userinfo
 export const Userinfo = () => thia.$http.get('/userInfo')
