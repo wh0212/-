@@ -94,3 +94,5 @@ export const UserCenter = () => thia.$http.get('/getUCenterInfo')
 
 //我的学习
 export const mystaus = (type) => thia.$http.get(`/myStudy/${type}`)
+//课程订单
+export const order =(data)=> thia.$http.post('/myOrder',data)

@@ -18,40 +18,40 @@ const routes = [
         path: "/index",
         name: "index",
         component: Index,
-        meta:{
-          title:"每时每课"
+        meta: {
+          title: "每时每课"
         }
       },
       {
         path: "/course",
         name: "course",
         component: () => import("../views/course.vue"),
-        meta:{
-          title:"特色课"
+        meta: {
+          title: "特色课"
         }
       },
       {
         path: "/record",
         name: "record",
         component: () => import("../views/record.vue"),
-        meta:{
-          title:"约课记录"
+        meta: {
+          title: "约课记录"
         }
       },
       {
         path: "/practice",
         name: "practice",
         component: () => import("../views/practice.vue"),
-        meta:{
-          title:"练习"
+        meta: {
+          title: "练习"
         }
       },
       {
         path: "/mine",
         name: "mine",
         component: () => import("../views/mine.vue"),
-        meta:{
-          title:"我的"
+        meta: {
+          title: "我的"
         }
       }
     ]
@@ -60,8 +60,8 @@ const routes = [
     path: "/login",
     name: "login",
     component: () => import("../views/login.vue"),
-    meta:{
-      title:"登录"
+    meta: {
+      title: "登录"
     }
   },
   {
@@ -73,8 +73,8 @@ const routes = [
     path: "/courceDetail",
     name: "courceDetail",
     component: () => import("../views/courceDetail.vue"),
-    meta:{
-      title:"课程详情"
+    meta: {
+      title: "课程详情"
     }
   },
   {
@@ -96,8 +96,8 @@ const routes = [
     path: "/coursedet",
     name: "coursedet",
     component: () => import("../views/index/swiperId.vue"),
-    meta:{
-      title:"课程详情"
+    meta: {
+      title: "课程详情"
     }
   },
   {
@@ -109,72 +109,96 @@ const routes = [
     path: "/search",
     name: "search",
     component: () => import("../views/course/Search.vue"),
-    meta:{
-      title:"搜索"
+    meta: {
+      title: "搜索"
     }
   },
   {
     path: "/smslogin",
     name: "smslogin",
     component: () => import("../views/login/SmsLogin.vue"),
-    meta:{
-      title:"验证码登录"
+    meta: {
+      title: "验证码登录"
     }
   },
   {
     path: "/setpass",
     name: "setpass",
     component: () => import("../views/login/setpass.vue"),
-    meta:{
-      title:"设置密码"
+    meta: {
+      title: "设置密码"
     }
   },
   {
     path: "/setmessage",
     name: "setmessage",
     component: () => import("../views/login/setmessage.vue"),
-    meta:{
-      title:"设置信息"
+    meta: {
+      title: "设置信息"
     }
   },
   {
     path: "/options",
     name: "options",
     component: () => import("../views/mine/options.vue"),
-    meta:{
-      title:"设置信息"
+    meta: {
+      title: "设置信息"
     }
   },
   {
     path: "/setnewpass",
     name: "setnewpass",
     component: () => import("../views/mine/setnewpass.vue"),
-    meta:{
-      title:"设置密码"
+    meta: {
+      title: "设置密码"
     }
   },
   {
     path: "/mystudy",
     name: "mystudy",
     component: () => import("../views/mine/mystaus.vue"),
-    meta:{
-      title:"我的学习"
+    meta: {
+      title: "我的学习"
     }
   },
   {
     path: "/info",
     name: "info",
     component: () => import("../views/mine/info.vue"),
-    meta:{
-      title:"个人信息"
+    meta: {
+      title: "个人信息"
     }
   },
   {
     path: "/setinfo",
     name: "setinfo",
     component: () => import("../views/mine/setinfo.vue"),
-    meta:{
-      title:"修改个人信息"
+    meta: {
+      title: "修改个人信息"
+    }
+  },
+  {
+    path: "/Concern",
+    name: "Concern",
+    component: () => import("../views/mine/Concern.vue"),
+    meta: {
+      title: "我的关注"
+    }
+  },
+  {
+    path: "/Collect",
+    name: "Collect",
+    component: () => import("../views/mine/Collect.vue"),
+    meta: {
+      title: "我的关注"
+    }
+  },
+  {
+    path: "/Order",
+    name: "Order",
+    component: () => import("../views/mine/order/order.vue"),
+    meta: {
+      title: "订单"
     }
   }
 ]
@@ -182,7 +206,7 @@ const routes = [
 const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
-  
+
 })
 
 export default router

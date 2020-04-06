@@ -50,22 +50,22 @@ export default {
       this.value = v;
     },
     setWood() {
-      console.log(this.name);
+      console.log(this.value);
       switch (this.tag) {
         case "nickname":
-          if (!this.name) {
+          if (!this.value) {
             this.$toast("昵称不能为空");
             return;
           }
-          user({ nickname: this.name }).then(() => {
+          user({ nickname: this.value }).then(() => {
             this.$toast("修改成功");
             this.$router.go(-1);
           });
           break;
         case "sex":
-          if (this.name) this.name = 1;
-          else this.name = 0;
-          user({ sex: this.name }).then(() => {
+          if (this.value) this.value = 1;
+          else this.value = 0;
+          user({ sex: this.value }).then(() => {
             this.$toast("修改成功");
             this.$router.go(-1);
           });

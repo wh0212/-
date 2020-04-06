@@ -2,16 +2,14 @@
   <div>
     <ul class="staus">
       <li v-for="(item,index) in data" :key="index">
+        <p class="number">订单编号：{{item.order_number}}</p>
         <p class="title">{{item.title}}</p>
-        <p  class="cource_xq">
-          <van-icon class="icon" name="clock-o" />
-          {{item.start_play_date | fomartTime('MM月dd日 hh:mm')}} ~ {{item.end_play_date | fomartTime('MM月dd日 hh:mm')}} |
-          共{{item.section_num}}课时
+        <p class="number">时间: &nbsp;&nbsp;{{item.created_at | fomartTime('yyyy.MM.dd hh:mm')}} </p>
+        <p class="number">
+            实付款：
+            <i class="iconfont icon-jinbi"></i>
+            {{item.order_price | toFixPrice}}
         </p>
-        <div class="hour">
-          <div class="hour_tiem"></div>
-          <span class="hour_xq">已学习{{item.progress_rate}}%</span>
-        </div>
       </li>
     </ul>
   </div>
@@ -38,13 +36,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.hour_xq{
-    padding-left: 10px;
+.hour_xq {
+  padding-left: 10px;
 }
-.hour_tiem{
-    width: 90px;
-    height: 4px;
-    background: #eee;
+.hour_tiem {
+  width: 90px;
+  height: 4px;
+  background: #eee;
 }
 .hour {
   color: #777;
@@ -62,6 +60,10 @@ export default {
     margin-right: 5px;
   }
 }
+.iconfont{
+    color: orange;
+    font-size: 12px;
+}
 .staus {
   width: 90%;
   margin: 0 auto;
@@ -70,9 +72,17 @@ export default {
     height: 127px;
     margin-top: 15px;
     border-radius: 5px;
+    p{
+        line-height: 12px;
+        color: #777;
+    }
+    .number{
+        padding-left: 10px;
+    }
     .title {
-      font-size: 16px;
+      font-size: 14px;
       padding-left: 10px;
+      margin-top: 20px;
     }
   }
 }

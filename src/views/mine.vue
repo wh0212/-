@@ -9,8 +9,12 @@
             <img class="vip-logo" src="../assets/images/皇冠-2 拷贝@2x.png" alt />
           </div>
           <div class="phone">
-            {{userinfo.mobile}} &nbsp;
-            <img class="xiugai" src="../assets/images/修改@2x.png" alt />
+            {{userinfo.nickname}}&nbsp;&nbsp;
+            <img
+              class="xiugai"
+              src="../assets/images/修改@2x.png"
+              alt
+            />
           </div>
           <div class="right" @click="yueke">去约课</div>
         </div>
@@ -53,15 +57,15 @@
         <li>
           <p class="title">订单相关</p>
           <div class="item-box">
-            <div class="item" @click="turnPage('Order',{order_type: 2})">
+            <div class="item" @click="turnPage('Order',2)">
               <img class="icon-order" src="~@/assets/theme-img/icon_person_order.png" />
               <p>课程订单</p>
             </div>
-            <div class="item" @click="turnPage('Order',{order_type: 3})">
+            <div class="item" @click="turnPage('Order',3)">
               <img class="icon-order" src="~@/assets/theme-img/icon_person_order.png" />
               <p>会员订单</p>
             </div>
-            <div class="item" @click="turnPage('Order',{order_type: 1})">
+            <div class="item" @click="turnPage('Order',1)">
               <img class="icon-order" src="~@/assets/theme-img/icon_person_order.png" />
               <p>约课订单</p>
             </div>
@@ -176,11 +180,11 @@ export default {
     }
   },
   methods: {
-    avatar(){
-      this.$router.push("/info")
+    avatar() {
+      this.$router.push("/info");
     },
-    yueke(){
-      this.$router.push('/oto')
+    yueke() {
+      this.$router.push("/oto");
     },
     share() {
       this.show = true;
@@ -195,7 +199,7 @@ export default {
     },
     requestInfo() {
       Userinfo().then(res => {
-        // console.log(res);
+        console.log(res);
         this.userinfo = res;
         this.requestCount();
       });
@@ -217,9 +221,9 @@ export default {
         return;
       }
       this.$router.push({
-        name: name,
+        path: name,
         query: {
-          query
+          order_type: query
         }
       });
     }
