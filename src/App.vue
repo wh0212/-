@@ -38,8 +38,6 @@ export default {
       ny: "",
       dx: "",
       dy: "",
-      xPum: "",
-      yPum: "",
       maxW:0,
       maxH:0
     };
@@ -68,7 +66,9 @@ export default {
       this.dy = touch.clientY;
     },
     move(event) {
-      event.preventDefault();
+      event.preventDefault();//否则页面就会一起滑动
+
+      //querySelector() 方法返回文档中匹配指定 CSS 选择器的一个元素
       let default_drag_comp = document.querySelector("#default_drag_comp");
       if (this.flags) {
         var touch;
@@ -79,13 +79,13 @@ export default {
         }
         this.nx = touch.clientX - this.position.x;
         this.ny = touch.clientY - this.position.y;
-
+        //左右范围
         if (this.nx < 0) {
           this.nx = 0;
         } else if (this.nx > this.maxW) {
           this.nx = this.maxW;
         }
-
+        //上下范围
         if (this.ny < 0) {
           this.ny = 0;
         } else if (this.ny >= this.maxH) {
@@ -99,7 +99,7 @@ export default {
         document.addEventListener(
           "touchmove",
           function() {
-            // event.preventDefault();
+            event.preventDefault();
           },
           false
         );
