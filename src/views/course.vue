@@ -52,33 +52,6 @@ export default {
       this.curseData = res.data.data;
       this.finished = false;
     });
-    // this.$nextTick(() => {
-    //   var bady = document.body;
-    //   // 获取滚动条的dom
-    //   bady.onscroll = () => {
-    //     var scrollTop =
-    //       document.documentElement.scrollTop || document.body.scrollTop;
-
-    //     var windowHeight =
-    //       document.documentElement.clientHeight || document.body.clientHeight;
-
-    //     var scrollHeight =
-    //       document.documentElement.scrollHeight || document.body.scrollHeight;
-
-    //     //  console.log("距顶部"+scrollTop+"可视区高度"+windowHeight+"滚动条总高度"+scrollHeight);
-    //     if (scrollTop + windowHeight >= scrollHeight - 10) {
-    //       // 把距离顶部的距离加上可视区域的高度 等于或者大于滚动条的总高度就是到达底部
-    //       console.log("触发了");
-    //       this.params.page++;
-    //       coursebasis(this.params).then(res => {
-    //         const { current_page, list, last_page } = res.data.data;
-    //         this.curseData.last_page = last_page;
-    //         this.curseData.current_page = current_page;
-    //         this.curseData.list = [...this.curseData.list, ...list];
-    //       });
-    //     }
-    //   };
-    // });
   },
   methods: {
     onLoad() {

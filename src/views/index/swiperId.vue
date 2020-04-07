@@ -12,11 +12,14 @@
         </template>
         <template #right>
           <van-icon @click="show=true" color="#000" size="20" name="exchange" />
-          <van-overlay :show="show" @click.stop>
-            <div class="wrapper" @click="show=false">
-              <div class="block" />
-            </div>
-          </van-overlay>
+          <van-dialog
+            v-model="show"
+            title="分享"
+            :close-on-click-overlay="true"
+            :show-confirm-button="false"
+          >
+            <img :src="qrimg" alt />
+          </van-dialog>
         </template>
       </van-nav-bar>
     </div>
@@ -24,8 +27,8 @@
       <div class="info">
         <p class="title">
           <span>{{data.info.title}}</span>
-          <span>
-            <van-icon class="icon" name="star-o" />
+          <span @click="oncollect">
+            <i class="iconfont icon-shoucang" :class="{'ic-active':data.info.is_collect}"></i>
           </span>
         </p>
         <p class="price">
@@ -75,16 +78,16 @@
         <p class="title">课程评论</p>
         <img src="../../assets/images/empty.png" alt />
       </div>
-      <van-button class="course-btn" @click="submit">立即报名</van-button>
+      <van-button class="course-btn" @click="submit">{{state==0?'立即报名':'立即学习'}}</van-button>
     </div>
   </div>
 </template>
 
 <script>
 import Charpter from "../../components/Charpter";
-import { NavBar, Icon, Button, Overlay, Popup, Toast } from "vant";
+import { NavBar, Icon, Button, Overlay, Popup, Toast, Dialog } from "vant";
 import Tiem from "../../util/Time";
-import { apply } from "../../request/http";
+import { apply, collect, nocollect } from "../../request/http";
 export default {
   name: "swiperid",
   data() {
@@ -98,7 +101,9 @@ export default {
       top: 0,
       show: false,
       show1: false,
-      active: ""
+      active: "",
+      qrimg: "",
+      state: 0
     };
   },
   components: {
@@ -108,23 +113,74 @@ export default {
     [Button.name]: Button,
     [Overlay.name]: Overlay,
     [Popup.name]: Popup,
-    [Toast.name]: Toast
+    [Toast.name]: Toast,
+    [Dialog.name]: Dialog
   },
   mounted() {
-    this.$http.get(`/courseInfo/basis_id=${this.$route.query.id}`).then(res => {
-      console.log(res);
-      this.data = res;
-    });
+    this.getdetail();
+    this.getUrl();
     window.addEventListener("scroll", this.handleScroll);
   },
   destroyed() {
     window.removeEventListener("scroll", this.handleScroll);
   },
   methods: {
+    //收藏
+    oncollect() {
+      let obj = {
+        course_basis_id: this.data.info.id,
+        type: 1
+      };
+      if (!this.data.info.is_collect) {
+        collect(obj).then(() => {
+          this.$toast({
+            message: "收藏成功",
+            type: "success",
+            duration: 800
+          });
+        });
+      } else {
+        nocollect(this.data.info.collect_id).then(() => {
+          this.$toast({
+            message: "取消收藏",
+            duration: 800
+          });
+        });
+      }
+      this.getdetail();
+    },
+    getdetail() {
+      this.$http
+        .get(`/courseInfo/basis_id=${this.$route.query.id}`)
+        .then(res => {
+          console.log(res);
+          if (res.info.is_buy || res.info.is_join_study) {
+            this.state = 1;
+          }
+          console.log(this.state);
+          this.data = res;
+        });
+    },
+    getUrl() {
+      let URL = document.URL + "&share=1";
+      this.QueryDetail = URL;
+      this.$qrcode.toDataURL(URL, (err, res) => {
+        if (err) {
+          throw err;
+        }
+        this.qrimg = res;
+      });
+    },
     onClickLeft() {
       this.$router.go(-1);
     },
     submit() {
+      console.log(
+        this.data.info.id,
+        this.data.info.course_type,
+        this.$route.query.id
+      );
+
       let obj = {
         shop_id: this.data.info.id,
         type: this.data.info.course_type
@@ -135,22 +191,25 @@ export default {
           this.$toast({
             message: "成功",
             type: "success",
-            duration: 1000
+            duration: 1000,
+            onClose: () => {
+              this.getdetail();
+            }
           });
         });
       } else {
         console.log(111);
-        
+
         // if (
         //   this.data.info.stock == 0 &&
         //   this.data.info.store_num > 0 &&
         //   (this.data.info.course_type == 7 || this.data.info.course_type == 3)
         // ) {
-          this.$toast({
-            message: "你来晚了哦,名额已经没有了~",
-             type: "success",
-            duration: 1500
-          });
+        this.$toast({
+          message: "你来晚了哦,名额已经没有了~",
+          type: "success",
+          duration: 1500
+        });
         //   return;
         // }
       }
@@ -178,6 +237,13 @@ export default {
 
 
 <style lang="scss" scoped>
+.icon-shoucang {
+  font-size: 16px;
+  padding-right: 10px;
+}
+.ic-active {
+  color: red;
+}
 .active {
   color: #333;
   font-weight: 500;

@@ -96,3 +96,10 @@ export const UserCenter = () => thia.$http.get('/getUCenterInfo')
 export const mystaus = (type) => thia.$http.get(`/myStudy/${type}`)
 //课程订单
 export const order =(data)=> thia.$http.post('/myOrder',data)
+//收藏
+export const collect =(data)=>thia.$http.post('/collect',data)
+//取消收藏
+export const nocollect=(data)=>thia.$http.put(`/collect/cancel/${data}/1`)
+
+//收藏列表
+export const collectlist =(data)=>thia.$http.get('/collect',data)

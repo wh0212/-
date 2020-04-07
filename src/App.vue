@@ -49,7 +49,6 @@ export default {
     },
     // 实现移动端拖拽
     down() {
-      // let default_drag_comp = document.getElementById("#default_drag_comp");
       this.flags = true;
       var touch;
       if (event.touches) {
@@ -57,11 +56,7 @@ export default {
       } else {
         touch = event;
       }
-      // this.maxW = document.body.clientWidth - default_drag_comp.offsetWidth;
-      // this.maxH = document.body.clientHeight - default_drag_comp.offsetHeight;
-  
-      // this.position.x = touch.clientX - default_drag_comp.offsetLeft;
-      // this.position.y = touch.clientY - default_drag_comp.offsetTop;
+
       this.dx = touch.clientX;
       this.dy = touch.clientY;
     },
@@ -77,6 +72,7 @@ export default {
         } else {
           touch = event;
         }
+
         this.nx = touch.clientX - this.position.x;
         this.ny = touch.clientY - this.position.y;
         //左右范围
@@ -90,8 +86,7 @@ export default {
           this.ny = 0;
         } else if (this.ny >= this.maxH) {
           this.ny = this.maxH;
-          // console.log(this.maxH,this.maxW);
-          
+
         }
         default_drag_comp.style.left = this.nx-30 + "px";
         default_drag_comp.style.top = this.ny-30 + "px";
@@ -99,7 +94,7 @@ export default {
         document.addEventListener(
           "touchmove",
           function() {
-            event.preventDefault();
+            // event.preventDefault();
           },
           false
         );
