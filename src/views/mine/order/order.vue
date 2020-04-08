@@ -1,6 +1,6 @@
 <template>
   <div>
-    <van-nav-bar @click-left="onClickLeft" title="我的关注" left-arrow></van-nav-bar>
+    <van-nav-bar @click-left="onClickLeft" :title="name" left-arrow></van-nav-bar>
     <van-tabs @change="onTabChange">
       <van-tab v-for="(item, index) in tabs" :key="index" :title="item.name"></van-tab>
     </van-tabs>
@@ -26,10 +26,12 @@
 import { NavBar, Tab, Tabs, List } from "vant";
 import { order } from "@/request/http";
 import mystausItem from "../../../components/mine/orderItem";
+import { OrderType } from "@/util/enums";
 export default {
   props: {},
   data() {
     return {
+      name: OrderType.getValue(this.$route.query.order_type) || "我的订单",
       dataList: [],
       params: {
         order_status: 0,

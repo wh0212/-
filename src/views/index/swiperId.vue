@@ -182,12 +182,16 @@ export default {
       //   type: this.data.info.course_type
       // };
       if (this.data.info.is_free) {
+        console.log(22222);
+        
         this.$http
-          .post(`/api/order/downOrder`, {
+          .post(`/order/downOrder`, {
             shop_id: this.data.info.id,
             type: this.data.info.course_type
           })
-          .then(() => {
+          .then((res) => {
+            console.log(res);
+            
             this.$toast({
               message: "成功",
               type: "success",
@@ -197,19 +201,18 @@ export default {
           });
       } else {
         console.log(111);
-
-        // if (
-        //   this.data.info.stock == 0 &&
-        //   this.data.info.store_num > 0 &&
-        //   (this.data.info.course_type == 7 || this.data.info.course_type == 3)
-        // ) {
+        if (
+          this.data.info.stock == 0 &&
+          this.data.info.store_num > 0 &&
+          (this.data.info.course_type == 7 || this.data.info.course_type == 3)
+        ) {
         this.$toast({
           message: "你来晚了哦,名额已经没有了~",
           type: "success",
           duration: 1500
         });
-        //   return;
-        // }
+          return;
+        }
       }
     },
     handleScroll() {

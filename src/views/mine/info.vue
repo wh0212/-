@@ -50,7 +50,7 @@
         <ul v-if="changeTag == 'avatar'" class="popup">
           <li @click="onShowProp(1)">
             拍照
-            <input type="file" accept="image/*" capture="camera" @change="onChangeAvatar" />
+            <input type="file" accept="image/*" @change="onChangeAvatar" />
           </li>
           <li @click="onShowProp(2)">
             从手机相册选择
@@ -200,11 +200,13 @@ export default {
       this.requestUpdateUserInfo({ birthday: youWant });
     },
     onChangeAvatar(e) {
-      // console.log(e.target.files[0]);
+      console.log(e.target.files[0]);
       const formdata = new FormData();
-      formdata.append("file", e.target.files[0]);
+      formdata.append("file", e.target.files[0]); //在数据末尾追加数据append(key,value)
+      console.log(formdata.get('file'));
+
       avatar(formdata).then(res => {
-        // console.log(res);
+        console.log(res);
         this.requestUpdateUserInfo({ avatar: res.path });
         this.showPopup = false;
       });
@@ -364,7 +366,7 @@ export default {
         });
         this.showPopup = false;
       });
-    },
+    }
   },
   mounted() {
     this.requestUserInfo();

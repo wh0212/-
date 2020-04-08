@@ -190,8 +190,14 @@ export default {
       this.show = true;
     },
     mystatus(item) {
+      console.log(item);
+
       if (item.style == "my-study") {
         this.$router.push("/mystudy");
+      } else if (item.style == "my-plan") {
+        this.$router.push("/record");
+      } else if (item.style == "my-period") {
+        this.$router.push("/myCurrency");
       }
     },
     openCustom() {

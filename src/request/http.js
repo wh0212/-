@@ -23,10 +23,14 @@ export const appIndex = () => Fetch(
 )
 
 //讲师详情
-export const teacherId = (data) => Request({
-    url: `/api/teacher/${data}`,
-    method: "GET"
-})
+export const teacherId = (data) => thia.$http.get(`/teacher/${data}`)
+
+//讲师关注 teacher/collect/52?
+export const teacherCollect = (data) => thia.$http.get(`/teacher/collect/${data}`)
+//讲师列表
+export const teacherList =(data)=>thia.$http.get('/collect',data)
+//讲师列表取消关注
+export const noteacher =(data)=>thia.$http.put(`/collect/cancel/${data}/2`)
 
 export const teacherInfo = (data) => Request({
     url: `/api/teacher/info/${data}`,
@@ -46,7 +50,7 @@ export const courseify = () => Request({
 })
 
 //分类-分页?page=1&limit=10
-export const coursebasis = (data) => thia.$http.get('/courseBasis',data)
+export const coursebasis = (data) => thia.$http.get('/courseBasis', data)
 
 //约课 app/oto/myInviteCourse/index
 
@@ -77,11 +81,11 @@ export const attr = () => thia.$http.get('/module/attribute/1')
 export const user = (data) => thia.$http.put('/user', data)
 
 //分享
-export const share =()=> thia.$http.post('/public/share')
+export const share = () => thia.$http.post('/public/share')
 //更换用户头像
-export const avatar =(data)=>thia.$http.post('/public/img',data)
+export const avatar = (data) => thia.$http.post('/public/img', data)
 //城市
-export const city =(data)=>thia.$http.get(`/sonArea/${data}`)
+export const city = (data) => thia.$http.get(`/sonArea/${data}`)
 
 //用户userinfo
 export const Userinfo = () => thia.$http.get('/userInfo')
@@ -91,11 +95,18 @@ export const UserCenter = () => thia.$http.get('/getUCenterInfo')
 //我的学习
 export const mystaus = (type) => thia.$http.get(`/myStudy/${type}`)
 //课程订单
-export const order =(data)=> thia.$http.post('/myOrder',data)
+export const order = (data) => thia.$http.post('/myOrder', data)
 //收藏
-export const collect =(data)=>thia.$http.post('/collect',data)
+export const collect = (data) => thia.$http.post('/collect', data)
 //取消收藏
-export const nocollect=(data)=>thia.$http.put(`/collect/cancel/${data}/1`)
+export const nocollect = (data) => thia.$http.put(`/collect/cancel/${data}/1`)
 
 //收藏列表
-export const collectlist =(data)=>thia.$http.get('/collect',data)
+export const collectlist = (data) => thia.$http.get('/collect', data)
+
+//余额
+export const gold =()=>thia.$http.get('/coinBalance');
+//充值
+export const czgold =()=>thia.$http.get('/coin/coinRank')
+//金额明细
+export const goldmx =(data)=>thia.$http.get('/coin/item',data)

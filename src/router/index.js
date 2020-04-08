@@ -200,6 +200,14 @@ const routes = [
     meta: {
       title: "订单"
     }
+  },
+  {
+    path: "/myCurrency",
+    name: "myCurrency",
+    component: () => import("../views/mine/mycurrency.vue"),
+    meta: {
+      title: "我的余额"
+    }
   }
 ]
 

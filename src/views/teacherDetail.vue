@@ -13,7 +13,7 @@
             <span>&nbsp;{{detailData.age}}年教龄</span>
           </p>
         </div>
-        <div class="cart_right">关注</div>
+        <div class="cart_right" @click="focus">{{flag==2?'关注':'取消关注'}}</div>
       </div>
     </div>
     <div class="detail_content">
@@ -46,32 +46,34 @@
         </van-tab>
       </van-tabs>
     </div>
-    <div :class="flag==0?'detail_bottom':'detail_bottomw'">{{flag==0?"立即预约":"无法预约"}}</div>
+    <div v-show="detailData.level_name" class="detail_bottom">立即预约</div>
   </div>
 </template>
 
 <script>
-import { Icon, Tab, Tabs } from "vant";
-import { teacherId, teacherInfo } from "../request/http";
+import { Icon, Tab, Tabs, Toast } from "vant";
+import { teacherId, teacherInfo, teacherCollect } from "../request/http";
 export default {
   data() {
     return {
       detailData: {},
       active: 0,
       attr: [],
-      flag: 0
+      flag: 0,
+      fouc: true
     };
   },
   components: {
     [Icon.name]: Icon,
     [Tab.name]: Tab,
-    [Tabs.name]: Tabs
+    [Tabs.name]: Tabs,
+    [Toast.name]: Toast
   },
   mounted() {
     teacherId(this.$route.query.id).then(res => {
-      // console.log(res.data.data.flag);
-      this.flag = res.data.data.flag;
-      this.detailData = res.data.data.teacher;
+      console.log(res);
+      this.flag = res.flag;
+      this.detailData = res.teacher;
     });
     teacherInfo(this.$route.query.id).then(res => {
       //   console.log(res.data.data.attr);
@@ -81,6 +83,20 @@ export default {
   methods: {
     hui() {
       this.$router.go(-1);
+    },
+    focus() {
+      teacherCollect(this.detailData.id).then(res => {
+        console.log(res);
+        this.$toast({
+          message: res.flag == 1 ? "已关注" : "已取消",
+          type: "success",
+          duration: 1000
+        });
+        teacherId(this.$route.query.id).then(res => {
+          this.flag = res.flag;
+          this.detailData = res.teacher;
+        });
+      });
     }
   }
 };

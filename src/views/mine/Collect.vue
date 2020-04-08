@@ -69,6 +69,7 @@ export default {
     [Toast.name]: Toast
   },
   mounted() {
+    document.body.style.background = "#f2f3f5";
     this.getcollect();
   },
   methods: {

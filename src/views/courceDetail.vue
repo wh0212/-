@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import { courceId, apply } from "../request/http";
+import { courceId } from "../request/http";
 import { NavBar, Icon, Toast } from "vant";
 export default {
   components: {
@@ -94,6 +94,9 @@ export default {
     });
   },
   methods: {
+    addapply(){
+
+    },
     handleScroll() {
       const top = document.documentElement.scrollTop || document.body.scrollTop;
       if (top > 4) {

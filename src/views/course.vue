@@ -48,6 +48,7 @@ export default {
     };
   },
   mounted() {
+    document.body.style.background="#f2f3f5"
     coursebasis().then(res => {
 
       this.curseData = res;
