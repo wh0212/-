@@ -74,7 +74,6 @@ export default {
   methods: {
     onItem(v) {
       console.log(v);
-      
       this.$router.push({
         path: "/coursedet",
         query: {

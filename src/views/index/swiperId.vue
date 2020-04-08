@@ -175,28 +175,26 @@ export default {
       this.$router.go(-1);
     },
     submit() {
-      console.log(
-        this.data.info.id,
-        this.data.info.course_type,
-        this.$route.query.id
-      );
+      console.log(this.data.info.id, this.data.info.course_type, this.data);
 
-      let obj = {
-        shop_id: this.data.info.id,
-        type: this.data.info.course_type
-      };
+      // let obj = {
+      //   shop_id: this.data.info.id,
+      //   type: this.data.info.course_type
+      // };
       if (this.data.info.is_free) {
-        apply(obj).then(res => {
-          console.log(res);
-          this.$toast({
-            message: "成功",
-            type: "success",
-            duration: 1000,
-            onClose: () => {
-              this.getdetail();
-            }
+        this.$http
+          .post(`/api/order/downOrder`, {
+            shop_id: this.data.info.id,
+            type: this.data.info.course_type
+          })
+          .then(() => {
+            this.$toast({
+              message: "成功",
+              type: "success",
+              duration: 1000
+            });
+            this.getdetail();
           });
-        });
       } else {
         console.log(111);
 

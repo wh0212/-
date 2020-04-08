@@ -49,16 +49,18 @@ export default {
   },
   mounted() {
     coursebasis().then(res => {
-      this.curseData = res.data.data;
+
+      this.curseData = res;
       this.finished = false;
     });
   },
   methods: {
     onLoad() {
       this.params.page++;
-      coursebasis(this.params).then(res => {
+      coursebasis({page:this.params.page}).then(res => {
         this.loading = false;
-        const { current_page, list, last_page } = res.data.data;
+        const { current_page, list, last_page } = res;
+
         if (list.length == 0 && this.page != 1) {
           this.finished = true;
           this.onFinished && this.onFinished();
@@ -74,7 +76,7 @@ export default {
       this.$router.push("/search");
     },
     resetfun() {
-      console.log(this.params);
+    
       this.params = {
         page: 1,
         order_by: 0,
@@ -82,7 +84,7 @@ export default {
         classify_id: null
       };
       coursebasis().then(res => {
-        this.curseData = res.data.data;
+        this.curseData = res;
         this.finished = false;
       });
     },
@@ -96,16 +98,16 @@ export default {
     },
     beg(v) {
       coursebasis(v).then(res => {
-        this.curseData.list = res.data.data.list;
-        this.curseData.current_page = res.data.data.current_page;
+        this.curseData.list = res.list;
+        this.curseData.current_page = res.current_page;
       });
     },
     attrId(v) {
       this.params.attr_val_id = v;
 
       coursebasis({ attr_val_id: v }).then(res => {
-        this.curseData.list = res.data.data.list;
-        this.curseData.current_page = res.data.data.current_page;
+        this.curseData.list = res.list;
+        this.curseData.current_page = res.current_page;
       });
     }
   }

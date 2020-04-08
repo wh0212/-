@@ -46,11 +46,7 @@ export const courseify = () => Request({
 })
 
 //分类-分页?page=1&limit=10
-export const coursebasis = (data) => Request({
-    url: `/api/courseBasis`,
-    method: "GET",
-    params: data
-})
+export const coursebasis = (data) => thia.$http.get('/courseBasis',data)
 
 //约课 app/oto/myInviteCourse/index
 

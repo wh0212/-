@@ -40,7 +40,7 @@ export default {
       list: []
     };
   },
-  created() {
+  mounted() {
     console.log(this.data);
   },
   methods: {
