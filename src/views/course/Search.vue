@@ -23,7 +23,7 @@
         </div>
       </div>
       <div v-else>
-        <van-list   v-model="loading" :finished="finished" @load="onLoad">
+        <van-list v-model="loading" :finished="finished" @load="onLoad">
           <CourseSearitem :data="classList" v-if="classList.length" />
         </van-list>
         <div class="empty" v-if="emptybool">
@@ -46,6 +46,7 @@ export default {
       finished: true,
       classList: [],
       page: 1,
+      name: this.$route.query.name,
       emptybool: false,
       input_history: JSON.parse(window.localStorage.getItem("list")) || []
     };
@@ -59,8 +60,8 @@ export default {
   },
   methods: {
     btnitem(item) {
-        this.value= item;
-        this.beg()
+      this.value = item;
+      this.beg();
     },
     del() {
       this.input_history = [];
@@ -81,34 +82,42 @@ export default {
           this.input_history.unshift(val);
         }
       }
-        this.beg()
+      this.beg();
       window.localStorage.setItem("list", JSON.stringify(this.input_history));
     },
     beg() {
-      this.$http
-        .get("/courseBasis", {
-          limit: 10,
-          page: this.page,
-          course_type: 0,
-          keywords: this.value
-        })
-        .then(res => {
-          this.loading = false;
-          if (res.list.length == 0) {
-            this.classList=[]
-            this.finished = true;
-            this.emptybool = true;
-            return;
-          }
-          if (this.page == 1) {
-            this.classList = res.list;
-            console.log(this.classList);
-            this.emptybool = false;
-          } else {
-            this.classList = this.classList.concat(res.list);
-            this.emptybool = false;
-          }
+      if (this.$route.query.name) {
+        console.log(this.value);
+        this.$store.commit("OTO_sear", this.value);
+        this.$router.replace({
+          name: this.name
         });
+      } else {
+        this.$http
+          .get("/courseBasis", {
+            limit: 10,
+            page: this.page,
+            course_type: 0,
+            keywords: this.value
+          })
+          .then(res => {
+            this.loading = false;
+            if (res.list.length == 0) {
+              this.classList = [];
+              this.finished = true;
+              this.emptybool = true;
+              return;
+            }
+            if (this.page == 1) {
+              this.classList = res.list;
+              console.log(this.classList);
+              this.emptybool = false;
+            } else {
+              this.classList = this.classList.concat(res.list);
+              this.emptybool = false;
+            }
+          });
+      }
     },
     onCancel() {
       if (this.$refs.txt.innerHTML === "取消") {
@@ -118,9 +127,8 @@ export default {
       }
     },
     onLoad() {
-
       this.page++;
-      this.beg()
+      this.beg();
     }
   },
   watch: {

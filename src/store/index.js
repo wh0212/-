@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     courseList: [],
-    smslogin: {}
+    smslogin: {},
+    OtoSear: null
   },
   mutations: {
     course(state, data) {
@@ -14,6 +15,9 @@ export default new Vuex.Store({
     },
     smslogin(state, data) {
       state.smslogin = data
+    },
+    OTO_sear(state, data) {
+      state.OtoSear = data
     }
   },
   actions: {

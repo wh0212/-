@@ -3,7 +3,7 @@
     <div class="top">
       <van-nav-bar @click-left="onClickLeft" title="一对一辅导" left-arrow>
         <template #right>
-          <van-icon color="#000" size="20" name="search" />
+          <van-icon @click="search" color="#000" size="20" name="search" />
         </template>
       </van-nav-bar>
     </div>
@@ -62,18 +62,37 @@ export default {
           comm: "Condition"
         }
       ],
-      conditionobj: {}
+      conditionobj: {},
+      params: {
+        page: 1,
+        limit: 10,
+        teacher_name: this.$store.state.OtoSear
+      }
     };
   },
   mounted() {
     oto().then(res => {
       this.otoList = res;
     });
+    if (this.$store.state.OtoSear) {
+      oto(this.params).then(res => {
+        this.otoList = res;
+      });
+    }
+
     otoconditon().then(res => {
       this.conditionobj = res;
     });
   },
   methods: {
+    search() {
+      this.$router.push({
+        path: "/search",
+        query: {
+          name: "oto"
+        }
+      });
+    },
     off() {
       this.comm = "TeachList";
       this.opt.map(v => (v.active = false));
@@ -122,5 +141,6 @@ export default {
   top: 0;
   left: 0;
   right: 0;
+    z-index: 111;
 }
 </style>

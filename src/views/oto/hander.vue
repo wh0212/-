@@ -13,7 +13,7 @@
             <span>&nbsp;{{detailData.teach_age}}年教龄</span>
           </p>
         </div>
-        <div class="cart_right">{{describe}}</div>
+        <div @click="ondescribe" class="cart_right">{{describe}}</div>
       </div>
     </div>
   </div>
@@ -33,6 +33,14 @@ export default {
   methods: {
     hui() {
       this.$router.go(-1);
+    },
+    ondescribe(){
+      this.$router.push({
+        path:"/teacherDetail",
+        query:{
+          id:this.detailData.id
+        }
+      })
     }
   }
 };

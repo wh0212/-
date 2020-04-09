@@ -87,7 +87,7 @@
 import Charpter from "../../components/Charpter";
 import { NavBar, Icon, Button, Overlay, Popup, Toast, Dialog } from "vant";
 import Tiem from "../../util/Time";
-import { apply, collect, nocollect } from "../../request/http";
+import { collect, nocollect } from "../../request/http";
 export default {
   name: "swiperid",
   data() {

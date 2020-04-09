@@ -64,10 +64,12 @@ export const login = (data) => Request({
 //课程详情报名
 export const apply = (data) => thia.$http.post('/order/downOrder', data)
 //oto列表 app/otoCourse?page=1&limit=10&attr_val_id=6&
-export const oto = () => thia.$http.get("/otoCourse") //Fetch("/otoCourse", data)
+export const oto = (data) => thia.$http.get("/otoCourse",data) //Fetch("/otoCourse", data)
 
 // //oto选择老师条件 /app/otoCourseOptions?
 export const otoconditon = () => thia.$http.get("/otoCourseOptions")
+//预约课程
+export const orderTime =(data)=>thia.$http.post('/teacher/invite',data)
 
 //发送验证码
 export const SmsVerification = (data) => thia.$http.post('/smsCode', data)

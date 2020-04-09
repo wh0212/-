@@ -46,7 +46,7 @@
         </van-tab>
       </van-tabs>
     </div>
-    <div v-show="detailData.level_name" class="detail_bottom">立即预约</div>
+    <div v-show="detailData.level_name" @click="onorder" class="detail_bottom">立即预约</div>
   </div>
 </template>
 
@@ -97,6 +97,14 @@ export default {
           this.detailData = res.teacher;
         });
       });
+    },
+    onorder(){
+      this.$router.push({
+        path:"/otoplan",
+        query:{
+          id:this.detailData.id
+        }
+      })
     }
   }
 };

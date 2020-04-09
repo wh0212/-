@@ -1,5 +1,6 @@
 import { Toast } from 'vant';
-
+//允许同时存在多个 Toast
+Toast.allowMultiple();
 
 let dataurl = '/api'
 const Http = function () {
@@ -22,23 +23,17 @@ Http.prototype.fetch = function (url, method, params = {}) {
       DeviceID: this.DeviceID,
     };
   }
-  //     else if (ua.match(/QQ/i) == "qq") {
-  //         return "QQ";
-  // }
   else {
     config.headers = {
       DeviceType: 'H5',
-      DeviceID: this.DeviceID,
+      DeviceID: this.DeviceID
     };
   }
-
-  // config.headers = {
-  //   DeviceType: 'H5',
-  //   DeviceID: this.DeviceID,
-  // };
-  //   Toast.loading({
-  //     className: 'toast-loading'
-  //   });
+  //请求loading
+    Toast.loading({
+      message:"加载中",
+      className: 'toast-loading'
+    });
   if (params instanceof FormData) {
     config.body = params;
   } else {
@@ -56,6 +51,7 @@ Http.prototype.fetch = function (url, method, params = {}) {
     }
     config.headers['Content-Type'] = 'application/json'
   }
+
   if (localStorage.adminToken) {
     config.headers.Authorization = 'Bearer ' + localStorage.adminToken;
   }
