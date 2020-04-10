@@ -23,14 +23,21 @@
         </ul>
       </div>
       <div>
-        <component :obj="conditionobj" @off="off" :list="otoList" :is="comm"></component>
+        <component
+          @condoff="oncondoff"
+          :obj="conditionobj"
+          @off="off"
+          @reset="onreset"
+          :list="otoList"
+          :is="comm"
+        ></component>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { NavBar, Icon, Tab, Tabs } from "vant";
+import { NavBar, Icon, Tab, Tabs, List } from "vant";
 import { oto, otoconditon } from "../../request/http";
 import TeachList from "../../components/oto/teachList";
 import Time from "../../components/oto/time";
@@ -42,6 +49,7 @@ export default {
     [Icon.name]: Icon,
     [Tab.name]: Tab,
     [Tabs.name]: Tabs,
+    [List.name]: List,
     TeachList,
     Time,
     Condition
@@ -70,6 +78,9 @@ export default {
       }
     };
   },
+  created() {
+    document.body.style.background = "#f2f3f5";
+  },
   mounted() {
     oto().then(res => {
       this.otoList = res;
@@ -79,12 +90,26 @@ export default {
         this.otoList = res;
       });
     }
-
     otoconditon().then(res => {
       this.conditionobj = res;
     });
   },
   methods: {
+    oncondoff(v) {
+      console.log(v);
+      this.comm = "TeachList";
+      oto(v).then(res => {
+        this.otoList = res;
+      });
+      this.opt.map(v => (v.active = false));
+    },
+    onreset() {
+      oto().then(res => {
+        this.otoList = res;
+      });
+      this.comm = "TeachList";
+      this.opt.map(v => (v.active = false));
+    },
     search() {
       this.$router.push({
         path: "/search",
@@ -93,8 +118,10 @@ export default {
         }
       });
     },
-    off() {
+    off(v) {
+      console.log(v);
       this.comm = "TeachList";
+      this.otoList = v;
       this.opt.map(v => (v.active = false));
     },
     onClickLeft() {
@@ -110,6 +137,13 @@ export default {
         v.comm == item.comm ? (v.active = true) : (v.active = false)
       );
       this.comm = item.comm;
+    }
+  },
+  watch: {
+    otoList() {
+      console.log(2222);
+      
+      document.body.style.background = "#f2f3f5";
     }
   }
 };
@@ -141,6 +175,6 @@ export default {
   top: 0;
   left: 0;
   right: 0;
-    z-index: 111;
+  z-index: 111;
 }
 </style>

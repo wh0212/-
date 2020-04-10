@@ -1,13 +1,23 @@
 <template>
   <div>
-    <van-calendar
-      @confirm="off"
-      :poppable="false"
-      :show-confirm="false"
-      :show-mark="false"
-      :show-title="false"
-      :style="{ height: '280px' }"
-    />
+    <div class="time-date">
+      <p class="time-block">日期</p>
+      <van-row type="flex" justify="space-around">
+        <van-col v-for="(item,index) in week" :key="index">
+          <span class="time-week">{{item}}</span>
+        </van-col>
+      </van-row>
+      <div class="time-day">
+        <p @click.stop="selectDay(item)" v-for="(item,index) in day_list" :key="index">
+          <font
+            :class="selectTime.day==item.day?'active':item.disable==0?'disable':isToday==item.day?'today':''"
+          >
+            {{item.day}}
+            <span v-if="item.day == isToday" class="time-today">今天</span>
+          </font>
+        </p>
+      </div>
+    </div>
     <div class="time-rinle">
       <p class="time-block">时段</p>
       <div class="tr-ipt">
@@ -23,7 +33,7 @@
       </div>
     </div>
     <div class="botom">
-      <div class="reset">重置</div>
+      <div class="reset" @click="reset">重置</div>
       <div @click="ensure" class="fix">确定</div>
     </div>
     <van-popup v-model="timeShow" position="bottom" :style="{ height: '40%' }">
@@ -40,8 +50,8 @@
 </template>
 
 <script>
-import { Calendar, Cell, Popup, DatetimePicker } from "vant";
-
+import { Calendar, Cell, Popup, DatetimePicker, Row, Col } from "vant";
+import { oto } from "../../request/http";
 export default {
   data() {
     return {
@@ -49,7 +59,8 @@ export default {
       tiem: "",
       timeShow: false,
       currentTime: "",
-      timeChoose:"",
+      timeChoose: "",
+      week: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
       studyTime: {
         startTime: "",
         endTime: "",
@@ -57,20 +68,48 @@ export default {
           this.startTime = "";
           this.endTime = "";
         }
-      }
+      },
+      isToday: "",
+      day_list: [],
+      selectTime: {
+        year: "",
+        month: "",
+        day: ""
+      },
+      params: {}
     };
   },
   components: {
     [Calendar.name]: Calendar,
     [Cell.name]: Cell,
     [Popup.name]: Popup,
-    [DatetimePicker.name]: DatetimePicker
+    [DatetimePicker.name]: DatetimePicker,
+    [Row.name]: Row,
+    [Col.name]: Col
+  },
+  mounted() {
+    this.initTime();
   },
   methods: {
+    reset(){
+      this.$emit("reset")
+    },
+    selectDay(v) {
+      if (v.disable == 0) {
+        return;
+      }
+      this.selectTime = v;
+    },
+    initTime() {
+      let { days, day } = this.$pub.initDays();
+      this.isToday = day;
+      this.day_list = days;
+    },
     successHanlder(val) {
       console.log(val);
-
       this.studyTime[this.timeChoose] = val;
+      console.log(this.studyTime);
+      
       this.timeShow = false;
     },
     openPicker(name) {
@@ -84,21 +123,102 @@ export default {
     onConfirm(date) {
       this.date = this.formatDate(date);
     },
-    off(v) {
-      this.tiem = v;
+    getParams() {
+      let datatime = "";
+      if (this.selectTime.year) {
+        datatime =
+          this.selectTime.year +
+          "-" +
+          this.selectTime.month +
+          "-" +
+          this.selectTime.day;
+      }
+      let params = {
+        start_time: this.studyTime.startTime
+          ? datatime + " " + this.studyTime.startTime
+          : datatime
+          ? datatime + " 00:00:00"
+          : "",
+        end_time: this.studyTime.endTime
+          ? datatime + " " + this.studyTime.endTime
+          : datatime
+          ? datatime + " 23:59:59"
+          : ""
+      };
+      return params;
     },
+    //确认按钮
     ensure() {
-      console.log(this.tiem);
-      this.$emit("off");
-    },
-    getParams(){
-      
+      console.log(this.getParams());
+      oto(this.getParams()).then(res => {
+        console.log(res);
+         this.$emit("off",res);
+      });
+     
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
+@import "../../assets/CSS/index.scss";
+.time-date {
+  width: 95%;
+  margin: 10px auto;
+  background: #fff;
+  padding: 5px;
+  border-radius: 5px;
+  .time-block {
+    font-size: 14px;
+    padding-left: 10px;
+    margin-top: 5px;
+  }
+  .time-day {
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 10px;
+    p {
+      width: 14.1%;
+      height: 45px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        font-size: 17px;
+        font-family: PingFangSC-Medium;
+        font-weight: 500;
+        line-height: 35px;
+        color: rgba(89, 89, 89, 1);
+        text-align: center;
+        position: relative;
+        span {
+          width: 60px;
+          position: absolute;
+          bottom: -30px;
+          left: -13px;
+          font-size: 13px;
+          font-family: PingFangSC-Regular;
+          font-weight: 400;
+          color: rgba(183, 183, 183, 1);
+        }
+      }
+      font.active {
+        background: $theme_color;
+        color: #fff;
+      }
+      font.today {
+        background: #ebeefe;
+        color: $theme_color;
+      }
+      font.disable {
+        color: #b7b7b7;
+      }
+    }
+  }
+}
 .time-rinle {
   margin-top: 15px;
   height: 108px;

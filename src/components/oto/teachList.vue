@@ -1,37 +1,49 @@
 <template>
   <div class="content_teacher">
     <ul>
-      <li @click="makedetail(item)" v-for="(item,index) in list" :key="index">
-        <p class="buddha">
-          <img :src="item.avatar" alt />
-        </p>
-        <div class="message">
-          <div class="message_name">{{item.real_name}}</div>
-          <div class="message_xq">
-            <span>{{item.sex==0?"男":"女"}}&nbsp;</span>
-            <span>{{item.teach_age}}年教龄</span>
+      <van-list v-model="loading" :finished="finished" finished-text="没有更多了">
+        <li @click="makedetail(item)" v-for="(item,index) in list" :key="index">
+          <p class="buddha">
+            <img :src="item.avatar" alt />
+          </p>
+          <div class="message">
+            <div class="message_name">{{item.real_name}}</div>
+            <div class="message_xq">
+              <span>{{item.sex==0?"男":"女"}}&nbsp;</span>
+              <span>{{item.teach_age}}年教龄</span>
+            </div>
           </div>
-        </div>
-        <div class="make">
-          <div class="btn_teach">预约</div>
-        </div>
-      </li>
+          <div class="make">
+            <div class="btn_teach">预约</div>
+          </div>
+        </li>
+      </van-list>
     </ul>
   </div>
 </template>
 
 <script>
+import { List } from "vant";
 export default {
-  props:["list"],
-  methods:{
-    makedetail(v){
+  props: ["list"],
+  components: {
+    [List.name]: List
+  },
+  data() {
+    return {
+      loading: false,
+      finished: true
+    };
+  },
+  methods: {
+    makedetail(v) {
       console.log(v);
       this.$router.push({
-        path:"/otoplan",
-        query:{
-          id:v.teacher_id
+        path: "/otoplan",
+        query: {
+          id: v.teacher_id
         }
-      })
+      });
     }
   }
 };
