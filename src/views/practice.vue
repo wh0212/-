@@ -3,7 +3,7 @@
     <van-nav-bar title="练习" />
     <div class="question">
       <ul>
-        <li v-for="(item,index) in quesList" :key="index">
+        <li @click="onpract(item)" v-for="(item,index) in quesList" :key="index">
           <div class="imgmain">
             <img :src="item.image" alt />
           </div>
@@ -17,7 +17,7 @@
         <span style="color:#EB6100">默认排序</span>
         <span>时间</span>
       </div>
-      <img src="../assets/images/empty@2x.png" alt="">
+      <img src="../assets/images/empty@2x.png" alt />
       <div>暂无安排，敬请期待</div>
     </div>
   </div>
@@ -34,7 +34,8 @@ export default {
       quesList: [
         {
           image: require("../assets/images/exam-point.png"),
-          title: "考点专练"
+          title: "考点专练",
+          path: "point"
         },
         {
           image: require("../assets/images/paper-package.png"),
@@ -58,6 +59,17 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    onpract(item) {
+      switch (item.path) {
+        case "point":
+          this.$router.push({
+            name: item.path
+          });
+          break;
+      }
+    }
   }
 };
 </script>
@@ -80,15 +92,13 @@ export default {
   .title2 {
     display: flex;
     justify-content: space-between;
-    span{
-      padding:0 10px;
-
+    span {
+      padding: 0 10px;
     }
   }
-  img{
+  img {
     width: 30%;
     height: 140px;
-    
   }
 }
 .question {

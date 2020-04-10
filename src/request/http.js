@@ -28,9 +28,9 @@ export const teacherId = (data) => thia.$http.get(`/teacher/${data}`)
 //讲师关注 teacher/collect/52?
 export const teacherCollect = (data) => thia.$http.get(`/teacher/collect/${data}`)
 //讲师列表
-export const teacherList =(data)=>thia.$http.get('/collect',data)
+export const teacherList = (data) => thia.$http.get('/collect', data)
 //讲师列表取消关注
-export const noteacher =(data)=>thia.$http.put(`/collect/cancel/${data}/2`)
+export const noteacher = (data) => thia.$http.put(`/collect/cancel/${data}/2`)
 
 export const teacherInfo = (data) => Request({
     url: `/api/teacher/info/${data}`,
@@ -64,12 +64,12 @@ export const login = (data) => Request({
 //课程详情报名
 export const apply = (data) => thia.$http.post('/order/downOrder', data)
 //oto列表 app/otoCourse?page=1&limit=10&attr_val_id=6&
-export const oto = (data) => thia.$http.get("/otoCourse",data) //Fetch("/otoCourse", data)
+export const oto = (data) => thia.$http.get("/otoCourse", data) //Fetch("/otoCourse", data)
 
 // //oto选择老师条件 /app/otoCourseOptions?
 export const otoconditon = () => thia.$http.get("/otoCourseOptions")
 //预约课程
-export const orderTime =(data)=>thia.$http.post('/teacher/invite',data)
+export const orderTime = (data) => thia.$http.post('/teacher/invite', data)
 
 //发送验证码
 export const SmsVerification = (data) => thia.$http.post('/smsCode', data)
@@ -107,8 +107,15 @@ export const nocollect = (data) => thia.$http.put(`/collect/cancel/${data}/1`)
 export const collectlist = (data) => thia.$http.get('/collect', data)
 
 //余额
-export const gold =()=>thia.$http.get('/coinBalance');
+export const gold = () => thia.$http.get('/coinBalance');
 //充值
-export const czgold =()=>thia.$http.get('/coin/coinRank')
+export const czgold = () => thia.$http.get('/coin/coinRank')
 //金额明细
-export const goldmx =(data)=>thia.$http.get('/coin/item',data)
+export const goldmx = (data) => thia.$http.get('/coin/item', data)
+
+//题库选择--科目
+export const pointL = () => thia.$http.get("/wap/classify")
+//题库选择--题库 /wap/quesBank/19
+export const pointR = (data) => thia.$http.get(`/wap/quesBank/${data}`)
+//题库搜素 /wap/search/bank?bank=2&
+export const pointSearch =(data)=>thia.$http.get(`/wap/search/bank?bank=${data}`)

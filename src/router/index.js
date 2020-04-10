@@ -208,6 +208,14 @@ const routes = [
     meta: {
       title: "我的余额"
     }
+  },
+  {
+    path: "/point",
+    name: "point",
+    component: () => import("../views/practice/point.vue"),
+    meta: {
+      title: "考点专练"
+    }
   }
 ]
 
