@@ -21,6 +21,7 @@ router.beforeEach((to, from, next) => {
 Vue.prototype.$http = http;
 Vue.prototype.$pub = plugins;
 Vue.prototype.$qrcode = qrcode;
+Vue.prototype.$theme_color = "#eb6100"
 Vue.config.productionTip = false
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])

@@ -30,7 +30,7 @@
             <p>{{item.name}}</p>
             <ul class="item">
               <li
-                @click="pointRact=item2.id"
+                @click="onpointRact(item2)"
                 :class="pointRact==item2.id?'active2':''"
                 v-for="(item2) in item.bank"
                 :key="item2.id"
@@ -57,12 +57,27 @@
         </ul>
       </div>
     </div>
+    <div v-show="show==2">
+      <van-nav-bar :title="data.name" @click-left="onClickLeft" left-arrow />
+      <div class="bak"></div>
+      <div class="tiku_content">
+        <div class="content_top">
+          <span @click="point">
+            <van-icon size="17px" class="left_icon" name="bars" />&nbsp;&nbsp;
+            <span class="txt">题库选择</span>
+          </span>
+          <span class="right_shezhi">
+            <van-icon name="setting-o" />
+          </span>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import { NavBar, CellGroup, Field, Search, Toast } from "vant";
-import { pointL, pointR, pointSearch } from "../../request/http";
+import { NavBar, CellGroup, Field, Search, Toast, Icon } from "vant";
+import { pointL, pointR, pointSearch, examPoint } from "../../request/http";
 export default {
   props: {},
   components: {
@@ -70,7 +85,8 @@ export default {
     [CellGroup.name]: CellGroup,
     [Field.name]: Field,
     [Search.name]: Search,
-    [Toast.name]: Toast
+    [Toast.name]: Toast,
+    [Icon.name]: Icon
   },
   data() {
     return {
@@ -80,7 +96,8 @@ export default {
       searchList: [],
       act: 19,
       show: 0,
-      pointRact: 0
+      pointRact: 0,
+      data: {}
     };
   },
   mounted() {
@@ -89,6 +106,21 @@ export default {
     this.initpintR();
   },
   methods: {
+    point() {
+      this.show = 0;
+    },
+    onpointRact(item) {
+      console.log(item);
+      this.data = item;
+      this.pointRact = item.id;
+      this.show = 2;
+      this.getexam(item.classify_id,item.id);
+    },
+    getexam(v) {
+      examPoint(v).then(res => {
+        console.log(res);
+      });
+    },
     //enter
     onSearch() {
       if (!this.value) {
@@ -144,6 +176,28 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.bak {
+  height: 15px;
+  background: #f2f3f5;
+}
+.tiku_content {
+  .content_top {
+    line-height: 40px;
+    padding-left: 10px;
+    font-size: 15px;
+    vertical-align: middle;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .txt {
+      top: -3px;
+      position: relative;
+    }
+    .right_shezhi {
+      padding-right: 10px;
+    }
+  }
+}
 .sear_content {
   ul {
     li {

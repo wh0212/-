@@ -118,4 +118,8 @@ export const pointL = () => thia.$http.get("/wap/classify")
 //题库选择--题库 /wap/quesBank/19
 export const pointR = (data) => thia.$http.get(`/wap/quesBank/${data}`)
 //题库搜素 /wap/search/bank?bank=2&
-export const pointSearch =(data)=>thia.$http.get(`/wap/search/bank?bank=${data}`)
+export const pointSearch = (data) => thia.$http.get(`/wap/search/bank?bank=${data}`)
+//题库选择--选择/examPoint/21/15?
+export const examPoint = (a, b) => thia.$http.get(`/examPoint/${a}/${b}`)
+//套餐分类 /exam/classify
+export const classify =()=>thia.$http.get("/exam/classify")

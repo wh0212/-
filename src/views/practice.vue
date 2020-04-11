@@ -39,7 +39,8 @@ export default {
         },
         {
           image: require("../assets/images/paper-package.png"),
-          title: "套卷练习"
+          title: "套卷练习",
+          path:"paperPage"
         },
         {
           image: require("../assets/images/exam.png"),
@@ -62,13 +63,11 @@ export default {
   },
   methods: {
     onpract(item) {
-      switch (item.path) {
-        case "point":
+     
           this.$router.push({
             name: item.path
           });
-          break;
-      }
+        
     }
   }
 };

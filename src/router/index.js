@@ -216,6 +216,14 @@ const routes = [
     meta: {
       title: "考点专练"
     }
+  },
+  {
+    path: "/paperPage",
+    name: "paperPage",
+    component: () => import("../views/practice/paperPage.vue"),
+    meta: {
+      title: "套卷练习"
+    }
   }
 ]
 
