@@ -87,11 +87,21 @@ export default {
     },
     beg() {
       if (this.$route.query.name) {
-        console.log(this.value);
-        this.$store.commit("OTO_sear", this.value);
-        this.$router.replace({
-          name: this.name
-        });
+        switch (this.$route.query.name) {
+          case "oto":
+            this.$store.commit("OTO_sear", this.value);
+            this.$router.replace({
+              name: this.name
+            });
+            break;
+          case "paperPage":
+            console.log(this.value, this.$route.query.name);
+            this.$store.commit("Paer_sear", this.value);
+            this.$router.replace({
+              name: this.name
+            });
+            break;
+        }
       } else {
         this.$http
           .get("/courseBasis", {

@@ -224,6 +224,14 @@ const routes = [
     meta: {
       title: "套卷练习"
     }
+  },
+  {
+    path: "/exam",
+    name: "exam",
+    component: () => import("../views/practice/exam.vue"),
+    meta: {
+      title: "仿真模考"
+    }
   }
 ]
 

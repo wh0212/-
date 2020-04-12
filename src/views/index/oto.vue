@@ -82,14 +82,16 @@ export default {
     document.body.style.background = "#f2f3f5";
   },
   mounted() {
-    oto().then(res => {
-      this.otoList = res;
-    });
     if (this.$store.state.OtoSear) {
       oto(this.params).then(res => {
         this.otoList = res;
       });
+    } else {
+      oto().then(res => {
+        this.otoList = res;
+      });
     }
+
     otoconditon().then(res => {
       this.conditionobj = res;
     });
@@ -141,8 +143,6 @@ export default {
   },
   watch: {
     otoList() {
-      console.log(2222);
-      
       document.body.style.background = "#f2f3f5";
     }
   }

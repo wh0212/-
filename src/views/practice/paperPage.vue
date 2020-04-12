@@ -2,7 +2,7 @@
   <div>
     <van-nav-bar title="套卷练习" @click-left="onClickLeft" left-arrow>
       <template #right>
-        <van-icon class="search" name="search" />
+        <van-icon @click="Search" class="search" name="search" />
       </template>
     </van-nav-bar>
     <div class="course-fitler">
@@ -28,11 +28,21 @@
         </van-dropdown-item>
       </van-dropdown-menu>
     </div>
+    <div v-if="list.length!=0" class="content">
+      <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+        <Card :data="list" />
+      </van-list>
+    </div>
+    <div v-if="list.length==0">
+      <Empty :empty_type="{name:'请稍等，套卷正在赶来的路上啦'}" />
+    </div>
   </div>
 </template>
 
 <script>
 import "../../assets/CSS/index.scss";
+import Empty from "../../components/empty";
+import Card from "./questionCard";
 import {
   NavBar,
   Icon,
@@ -41,9 +51,10 @@ import {
   Sidebar,
   SidebarItem,
   TreeSelect,
-  Divider
+  Divider,
+  List
 } from "vant";
-import { classify } from "../../request/http";
+import { classify, packageP } from "../../request/http";
 export default {
   props: {},
   components: {
@@ -54,7 +65,10 @@ export default {
     [Sidebar.name]: Sidebar,
     [SidebarItem.name]: SidebarItem,
     [TreeSelect.name]: TreeSelect,
-    [Divider.name]: Divider
+    [Divider.name]: Divider,
+    [List.name]: List,
+    Empty,
+    Card
   },
   data() {
     return {
@@ -62,9 +76,9 @@ export default {
       classifyList: [],
       switch1: "",
       state: [
-        { key: "0", value: "全部" },
-        { key: "1", value: "已做" },
-        { key: "2", value: "未做" }
+        { key: 0, value: "全部" },
+        { key: 1, value: "已做" },
+        { key: 2, value: "未做" }
       ],
       mainActiveIndex: 0,
       //分类选中元素的id
@@ -73,17 +87,42 @@ export default {
         done_status: 0,
         classify_id: 0,
         name: ""
-      }
+      },
+      list: [],
+      loading: false,
+      finished: true
     };
   },
   mounted() {
     this.getclassify();
+    if (this.$store.state.Paersear) {
+      this.searchParams.name = this.$store.state.Paersear;
+      // console.log(this.searchParams);
+      this.getpackageP(this.searchParams);
+    }
   },
   methods: {
+    //搜索
+    Search() {
+      this.$router.push({
+        path: "/search",
+        query: {
+          name: "paperPage"
+        }
+      });
+    },
     selectType(name, val) {
       console.log(name, val);
       this.$refs[name].toggle();
       this.searchParams[name] = val;
+      console.log(this.searchParams);
+      this.getpackageP(this.searchParams);
+    },
+    getpackageP(v) {
+      packageP(v).then(res => {
+        console.log(res);
+        this.list = res.list;
+      });
     },
     onClickNav(index) {
       this.mainActiveIndex = index;
@@ -105,7 +144,7 @@ export default {
         });
         res.rows.unshift({
           text: "全部",
-          id: "0"
+          id: 0
         });
         this.classifyList = res.rows;
       });

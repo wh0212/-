@@ -40,11 +40,12 @@ export default {
         {
           image: require("../assets/images/paper-package.png"),
           title: "套卷练习",
-          path:"paperPage"
+          path: "paperPage"
         },
         {
           image: require("../assets/images/exam.png"),
-          title: "仿真模考"
+          title: "仿真模考",
+          path:"exam"
         },
         {
           image: require("../assets/images/wrong-test.png"),
@@ -63,11 +64,9 @@ export default {
   },
   methods: {
     onpract(item) {
-     
-          this.$router.push({
-            name: item.path
-          });
-        
+      this.$router.push({
+        name: item.path
+      });
     }
   }
 };
