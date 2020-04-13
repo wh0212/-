@@ -232,6 +232,14 @@ const routes = [
     meta: {
       title: "仿真模考"
     }
+  },
+  {
+    path: "/studyCalendar",
+    name: "studyCalendar",
+    component: () => import("../views/mine/study-calendar.vue"),
+    meta: {
+      title: "学习日历"
+    }
   }
 ]
 

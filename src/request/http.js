@@ -24,7 +24,6 @@ export const appIndex = () => Fetch(
 
 //讲师详情
 export const teacherId = (data) => thia.$http.get(`/teacher/${data}`)
-
 //讲师关注 teacher/collect/52?
 export const teacherCollect = (data) => thia.$http.get(`/teacher/collect/${data}`)
 //讲师列表
@@ -94,15 +93,25 @@ export const Userinfo = () => thia.$http.get('/userInfo')
 //user信息
 export const UserCenter = () => thia.$http.get('/getUCenterInfo')
 
+
 //我的学习
 export const mystaus = (type) => thia.$http.get(`/myStudy/${type}`)
+//学习日历
+export const myrili = (data) => thia.$http.get(`/study/live/${data}`)
+// 切换日历月份 /app/study/schedule?date=2019-8-1&
+export const myrlisutdy =(data)=>thia.$http.get(`/study/schedule?date=${data}`)
+//日历 course_type==1
+export const getRoom=(data)=>thia.$http.get(`/oto/getLiveRoomCode/${data}/0`)
+
+export const getRoomCode =(dataid,chapterID)=>thia.$http.get(`/getPcRoomCode/course_id=${dataid}/chapter_id=${chapterID}`)
+
+
 //课程订单
 export const order = (data) => thia.$http.post('/myOrder', data)
 //收藏
 export const collect = (data) => thia.$http.post('/collect', data)
 //取消收藏
 export const nocollect = (data) => thia.$http.put(`/collect/cancel/${data}/1`)
-
 //收藏列表
 export const collectlist = (data) => thia.$http.get('/collect', data)
 
@@ -126,4 +135,4 @@ export const classify = () => thia.$http.get("/exam/classify")
 //套卷选择 /exam/packagePractice?classify_id=8
 export const packageP = (data) => thia.$http.get("/exam/packagePractice", data)
 //仿真考试/exam/packageSimulation
-export const examlist =()=>thia.$http.get("/exam/packageSimulation")
+export const examlist = () => thia.$http.get("/exam/packageSimulation")
