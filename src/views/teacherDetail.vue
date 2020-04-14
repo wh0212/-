@@ -84,6 +84,7 @@ export default {
     hui() {
       this.$router.go(-1);
     },
+    //关注
     focus() {
       teacherCollect(this.detailData.id).then(res => {
         console.log(res);

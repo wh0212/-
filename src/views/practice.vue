@@ -49,7 +49,8 @@ export default {
         },
         {
           image: require("../assets/images/wrong-test.png"),
-          title: "错题练习"
+          title: "错题练习",
+          path:"errorques"
         },
         {
           image: require("../assets/images/assess.png"),

@@ -19,7 +19,7 @@
 import { Swipe, SwipeItem } from "vant";
 import Kinds from "../components/home/kinds";
 import Cart from "../components/home/Card";
-import {banner,cartlist} from "../request/http"
+import { banner, cartlist } from "../request/http";
 export default {
   components: {
     Kinds,
@@ -28,11 +28,12 @@ export default {
     [SwipeItem.name]: SwipeItem
   },
   mounted() {
+    document.body.style.background = "#f2f3f5";
+
     this.getBaner();
     cartlist().then(res => {
       this.cartlist = res;
     });
-    
   },
   data() {
     return {
@@ -43,9 +44,9 @@ export default {
   methods: {
     getBaner() {
       // console.log(this.$http);
-      banner().then((res)=>{
-      this.list = res
-    })
+      banner().then(res => {
+        this.list = res;
+      });
     },
     swiper(e) {
       console.log(e);

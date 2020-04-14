@@ -11,7 +11,7 @@
           <li
             :class="{act1:act1==item.key}"
             class="liItem"
-            v-for="(item) in state"
+            v-for="(item) in exam_type"
             :key="item.key"
             @click="onli('class',item)"
           >{{item.value}}</li>
@@ -20,7 +20,7 @@
       <van-dropdown-item title="考试状态" ref="act">
         <ul>
           <li
-            :class="{act1:act1==item.key}"
+            :class="{act1:act2==item.key}"
             class="liItem"
             v-for="(item,index) in start_status"
             :key="index"
@@ -31,9 +31,9 @@
       <van-dropdown-item title="参考状态" ref="act2">
         <ul>
           <li
-            :class="{act1:act1==item.key}"
+            :class="{act1:act3==item.key}"
             class="liItem"
-            v-for="(item,index) in exam_type"
+            v-for="(item,index) in state"
             :key="index"
             @click="onli('act2',item)"
           >{{item.value}}</li>
@@ -82,36 +82,90 @@ export default {
       ],
       list: [],
       loading: false,
-      finished: false,
+      finished: true,
       act1: 0,
       act2: 0,
-      act3: 0
+      act3: 0,
+      params: {
+        page: 1,
+        limit: 10,
+        exam_type: 0,
+        start_status: 0,
+        done_status: 0
+      }
     };
   },
   mounted() {
-    this.getexamlist();
+    if (this.$store.state.Examsear) {
+      this.params = {
+        name: this.$store.state.Examsear
+      };
+      this.getexamlist(this.params);
+    } else {
+      this.getexamlist(this.params);
+    }
   },
   methods: {
     onli(v, item) {
       switch (v) {
         case "class":
-          console.log(item);
+          this.params.exam_type = item.key;
+          this.params.name = "";
+          examlist(this.params).then(res => {
+            this.list = res.list;
+            this.act1 = item.key;
+            this.finished = true;
+          });
+          break;
+        case "act":
+          this.params.start_status = item.key;
+          this.params.name = "";
+          examlist(this.params).then(res => {
+            this.act2 = item.key;
+            this.list = res.list;
+            this.finished = true;
+          });
+          break;
+        case "act2":
+          this.params.done_status = item.key;
+          this.params.name = "";
+          examlist(this.params).then(res => {
+            this.act2 = item.key;
+            this.list = res.list;
+            this.finished = true;
+          });
           break;
       }
       this.$refs[v].toggle();
     },
-    onLoad() {},
-    getexamlist() {
-      examlist().then(res => {
-        console.log(res);
-        this.list = res.list;
+    onLoad() {
+      this.finished = true;
+      this.params.page++;
+      examlist(this.params).then(res => {
+        this.list = [...this.list, ...res.list];
         this.finished = true;
       });
     },
-    onClickLeft() {
-      this.$router.go(-1);
+    getexamlist(v) {
+      examlist(v).then(res => {
+        this.list = res.list;
+        this.finished = false;
+      });
     },
-    Search() {}
+    onClickLeft() {
+      this.$router.push("/practice");
+    },
+    Search() {
+      this.$router.push({
+        path: "/search",
+        query: {
+          name: "exam"
+        }
+      });
+    }
+  },
+  beforeDestroy() {
+    this.$store.commit("Exam_sear", null);
   }
 };
 </script>

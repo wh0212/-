@@ -135,4 +135,4 @@ export const classify = () => thia.$http.get("/exam/classify")
 //套卷选择 /exam/packagePractice?classify_id=8
 export const packageP = (data) => thia.$http.get("/exam/packagePractice", data)
 //仿真考试/exam/packageSimulation
-export const examlist = () => thia.$http.get("/exam/packageSimulation")
+export const examlist = (data) => thia.$http.get("/exam/packageSimulation",data)

@@ -8,7 +8,8 @@ export default new Vuex.Store({
     courseList: [],
     smslogin: {},
     OtoSear: null,
-    Paersear: null
+    Paersear: null,
+    Examsear: null
   },
   mutations: {
     course(state, data) {
@@ -22,6 +23,9 @@ export default new Vuex.Store({
     },
     Paer_sear(state, data) {
       state.Paersear = data
+    },
+    Exam_sear(state, data) {
+      state.Examsear = data
     }
   },
   actions: {

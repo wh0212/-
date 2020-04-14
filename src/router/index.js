@@ -240,6 +240,14 @@ const routes = [
     meta: {
       title: "学习日历"
     }
+  },
+  {
+    path: "/errorques",
+    name: "errorques",
+    component: () => import("../views/practice/errorques.vue"),
+    meta: {
+      title: "学习日历"
+    }
   }
 ]
 

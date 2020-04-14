@@ -101,6 +101,13 @@ export default {
               name: this.name
             });
             break;
+          case "exam":
+            console.log(this.value);
+            this.$store.commit("Exam_sear", this.value);
+            this.$router.replace({
+              name: this.name
+            });
+            break;
         }
       } else {
         this.$http
