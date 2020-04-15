@@ -33,7 +33,7 @@ export default {
   flex-direction: column;
   text-align: center;
   img{
-    width: 80%;
+    width: 70%;
     margin:0 auto;
   }
   p {

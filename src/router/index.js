@@ -248,6 +248,14 @@ const routes = [
     meta: {
       title: "学习日历"
     }
+  },
+  {
+    path: "/assess",
+    name: "assess",
+    component: () => import("../views/practice/assess.vue"),
+    meta: {
+      title: "测评记录"
+    }
   }
 ]
 

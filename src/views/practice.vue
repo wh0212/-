@@ -54,7 +54,8 @@ export default {
         },
         {
           image: require("../assets/images/assess.png"),
-          title: "测评记录"
+          title: "测评记录",
+          path:"assess"
         },
         {
           image: require("../assets/images/question-collocet.png"),

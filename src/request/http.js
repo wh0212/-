@@ -136,3 +136,7 @@ export const classify = () => thia.$http.get("/exam/classify")
 export const packageP = (data) => thia.$http.get("/exam/packagePractice", data)
 //仿真考试/exam/packageSimulation
 export const examlist = (data) => thia.$http.get("/exam/packageSimulation",data)
+//错题记录 /myExam/errorRecord?ques_source=-1
+export const errorques =(data)=>thia.$http.post('/myExam/errorRecord',data)
+//测聘记录 /examStatistics/detail
+export const assess =(data)=>thia.$http.get("/examStatistics/detail",data)
