@@ -11,20 +11,17 @@
       <div class="cell" v-for="(item, index) in titleList" :key="index">{{item}}</div>
     </div>
     <div class="day">
+      <div class="dayitem" v-for="(item,index) in weekDay" :key="index+'empty'"></div>
       <div
         class="dayitem"
         :class="{'pointer': item!==0}"
-        v-for="(item, index) in dayList"
+        v-for="(item, index) in days"
         :key="index"
         @click="onClickDay(item)"
       >
-        <div
-          :class="{'today':item.isToday,select: item.day == selectDay}"
-          v-if="item!==0"
-          class="text"
-        >
-          {{item.day}}
-          <div :class="{'has-course': hasCourse(item.date)}"></div>
+        <div :class="{'today':item==today.d,select:item==selected.d}" v-if="item!==0" class="text">
+          {{item}}
+          <div :class="{'has-course':(hasCourse(item)) }"></div>
         </div>
       </div>
     </div>
@@ -56,22 +53,28 @@ export default {
   },
   data() {
     return {
-      curYear: 2020, //当前年份
-      curMonth: 4, //当前月份
+      curYear: new Date().getFullYear(),
+      curMonth: new Date().getMonth() + 1,
       titleList: ["日", "一", "二", "三", "四", "五", "六"],
-      Date: new Date(),
-      dayOfMonth: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31], // 1-12月的天数
-      dayList: [],
-      selectDay: 0
+      days: "", //每个月的天数
+      weekDay: "", //每月第一天周几
+      today: {
+        //今天
+        y: new Date().getFullYear(),
+        m: new Date().getMonth() + 1,
+        d: new Date().getUTCDate()
+      },
+      selected: {
+        //选中的时间
+        y: "",
+        m: "",
+        d: ""
+      }
     };
   },
   mounted() {
-    this.init(this.Date);
-    this.$emit(
-      "onCurDate",
-      `${this.curYear}-${this.curMonth}-${this.Date.getDate()}`
-    );
-    this.selectDay = this.Date.getDate();
+    this.init();
+    this.$emit("onCurDate", `${this.today.y}-${this.today.m}-${this.today.d}`);
   },
   computed: {
     courseDateSet() {
@@ -83,6 +86,12 @@ export default {
     }
   },
   methods: {
+    isDateEqual(date1, date2) {
+      if (date1.getDate() == date2) {
+        return true;
+      }
+      return false;
+    },
     hasCourse(date) {
       for (const i of this.courseDateSet) {
         if (this.isDateEqual(i, date)) {
@@ -94,80 +103,40 @@ export default {
     //切换月份
     arrow(v) {
       if (v) {
-        this.curYear = this.curMonth + 1 > 12 ? this.curYear + 1 : this.curYear;
-        this.curMonth = this.curMonth + 1 > 12 ? 1 : this.curMonth + 1;
-        this.selectDay = 0;
-        this.init(new Date(`${this.curYear}/${this.curMonth}/1`));
+        this.curMonth++;
+        if (this.curMonth > 12) {
+          this.curMonth = 1;
+          this.curYear++;
+        }
         this.$emit("onChangeDate", `${this.curYear}-${this.curMonth}-1`);
+        this.today.d = null;
+        this.selected.d = null;
+        if (this.curMonth == new Date().getMonth() + 1) {
+          this.today.d = new Date().getUTCDate();
+        }
       } else {
-        this.curYear = this.curMonth - 1 <= 0 ? this.curYear - 1 : this.curYear;
-        this.curMonth = this.curMonth - 1 <= 0 ? 12 : this.curMonth - 1;
-        this.selectDay = 0;
-        this.init(new Date(`${this.curYear}/${this.curMonth}/1`));
+        this.curMonth--;
+        if (this.curMonth < 1) {
+          this.curMonth = 12;
+          this.curYear--;
+        }
         this.$emit("onChangeDate", `${this.curYear}-${this.curMonth}-1`);
+        this.today.d = null;
+        this.selected.d = null;
+        if (this.curMonth == new Date().getMonth() + 1) {
+          this.today.d = new Date().getUTCDate();
+        }
       }
     },
     onClickDay(v) {
-      this.selectDay = v.day;
-      //   console.log(v);
-      this.$emit("onclickDate", `${this.curYear}-${this.curMonth}-${v.day}`);
+      this.selected.y = this.curYear;
+      this.selected.m = this.curMonth;
+      this.selected.d = v;
+      this.$emit("onclickDate", `${this.selected.y}-${this.selected.m}-${v}`);
     },
-    init(data) {
-      //年份
-      this.curYear = data.getFullYear();
-      //月份
-      this.curMonth = data.getMonth() + 1;
-      // 判断是不是闰年
-      if (this.isLeapYear(data.getFullYear())) {
-        this.dayOfMonth[1] = 29;
-      }
-      //天数
-      const year = data.getFullYear(),
-        month = data.getMonth();
-      const dayList = [];
-      this.dayList = [];
-      //当月天数
-      const dayCount = this.dayOfMonth[month];
-      // 获得本月的1号是周几
-      let firstDayWeek = new Date(year, month, 1).getDay();
-      firstDayWeek = firstDayWeek == 0 ? 7 : firstDayWeek;
-      firstDayWeek = (firstDayWeek - this.firstDay + 7) % 7;
-      for (let i = 1; i <= firstDayWeek; ++i) {
-        dayList.push(0);
-      }
-      for (let i = 1; i <= dayCount; ++i) {
-        dayList.push(i);
-      }
-      for (const i of dayList) {
-        if (i == 0) {
-          this.dayList.push(i);
-        } else {
-          const date = new Date(year, month, i);
-          this.dayList.push({
-            date,
-            day: i,
-            isToday: this.isDateEqual(date, this.Date)
-          });
-        }
-      }
-      //   console.log(this.dayList);
-    },
-    isDateEqual(date1, date2) {
-      if (
-        date1.getFullYear() == date2.getFullYear() &&
-        date1.getMonth() == date2.getMonth() &&
-        date1.getDate() == date2.getDate()
-      ) {
-        return true;
-      }
-      return false;
-    },
-
-    isLeapYear(year) {
-      if (year % 100 == 0) {
-        return year % 400 == 0;
-      }
-      return year % 4 == 0;
+    init() {
+      this.days = new Date(this.curYear, this.curMonth, 0).getDate();
+      this.weekDay = new Date(this.curYear, this.curMonth - 1, 1).getDay();
     }
   }
 };

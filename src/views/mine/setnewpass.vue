@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { NavBar, Button,Toast } from "vant";
+import { NavBar, Button, Toast } from "vant";
 import { SmsVerification, secondPassword } from "../../request/http";
 export default {
   data() {
@@ -65,7 +65,7 @@ export default {
   components: {
     [NavBar.name]: NavBar,
     [Button.name]: Button,
-    [Toast.name]:Toast
+    [Toast.name]: Toast
   },
   methods: {
     goLogin() {
@@ -78,20 +78,21 @@ export default {
         return;
       }
       let obj = {
-          mobile: this.getsmscodeData.mobile,
-          password: this.getsmscodeData.pass,
-          sms_code: this.getsmscodeData.smscode
-        }
-      secondPassword(obj).then(res => {
-        console.log(res);
+        mobile: this.getsmscodeData.mobile,
+        password: this.getsmscodeData.pass,
+        sms_code: this.getsmscodeData.smscode
+      };
+      secondPassword(obj).then(() => {
         this.$toast.success({
-            message: "设置成功"
-          });
-          setTimeout(() => {
-            this.$router.push('/mine');
-          }, 1000);
+          message: "设置成功"
+        });
+        setTimeout(() => {
+          this.$toast.clear();
+          this.$router.push("/login");
+        }, 1000);
       });
     },
+    //获取验证码
     getsmsCode() {
       if (!this.$pub.isPoneAvailable(this.getsmscodeData.mobile)) {
         this.$toast("手机号码格式不正确");
@@ -107,9 +108,9 @@ export default {
         this.time = 60;
         var timer = setInterval(() => {
           this.time--;
-          if (this.time <= 0) {
-            this.timebool = false;
+          if (this.tiem <= 0) {
             clearInterval(timer);
+            this.timebool = false;
           }
         }, 1000);
       });

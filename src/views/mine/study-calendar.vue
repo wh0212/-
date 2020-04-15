@@ -42,18 +42,18 @@ export default {
   },
   methods: {
     clickDate(v) {
-      console.log(v);
+      // console.log(v);
       this.changeCurDate(v);
       this.requestCourse(v);
     },
     CurDate(v) {
-      console.log(v);
+      // console.log(v);
       this.changeCurDate(v);
       this.requestCourse(v);
       this.requestCourseDate(v);
     },
     changeDate(v) {
-      console.log(v);
+      // console.log(v);
       this.changeCurDate(v);
       this.requestCourseDate(v);
     },
@@ -63,7 +63,7 @@ export default {
     },
     requestCourseDate(date) {
       myrlisutdy(date).then(res => {
-        console.log(res);
+        // console.log(res);
         this.courseDate = [];
         for (const i in res) {
           this.courseDate.push(res[i]);
@@ -75,7 +75,7 @@ export default {
       // 解决浏览器兼容问题，chrome浏览器可以识别 '2019-8-1' 格式，但是safari无法识别；'2019/8/1' 格式才是兼容的
       date = date.replace(/-/g, "/");
       const timestamp = parseInt(new Date(date).getTime() / 1000);
-      console.log(timestamp);
+      // console.log(timestamp);
       myrili(timestamp).then(res => {
         console.log(res);
         this.courseList = res;

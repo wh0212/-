@@ -2,7 +2,7 @@
   <div>
     <div class="top">
       <van-nav-bar
-        v-show="handeract"
+        v-show="top<30"
         title="课程详情"
         @click-left="onClickLeft"
         @click-right="onClickRight"
@@ -14,7 +14,7 @@
       </van-nav-bar>
       <van-nav-bar
         right-text="分享"
-        v-show="!handeract"
+        v-show="top>30"
         @click-left="onClickLeft"
         @click-right="onClickRight"
         left-arrow
@@ -84,31 +84,19 @@ export default {
           title: ""
         }
       },
-      handeract: true
+      handeract: true,
+      top: 0
     };
   },
   mounted() {
     courceId(this.$route.query.id).then(res => {
-      // console.log(res.data.data);
       this.curce = res.data.data;
     });
   },
   methods: {
-    addapply(){
-
-    },
+    addapply() {},
     handleScroll() {
-      const top = document.documentElement.scrollTop || document.body.scrollTop;
-      if (top > 4) {
-        //到120的时候完全显示
-        let opacity = top / 120;
-        // console.log(opacity);
-        opacity = opacity > 1 ? 1 : opacity;
-        this.opacityStyle = { opacity };
-        this.handeract = false;
-      } else {
-        this.handeract = true;
-      }
+      this.top = document.body.scrollTop || document.documentElement.scrollTop;
     },
     onClickLeft() {
       this.$router.go(-1);
