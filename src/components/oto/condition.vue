@@ -80,7 +80,6 @@ export default {
   watch: {
     radio: {
       handler(val) {
-
         if (val == 2) {
           this.teachSearch.is_attended = 1;
         } else {
@@ -94,9 +93,17 @@ export default {
       }
     }
   },
+  
   methods: {
     reset() {
-      this.$emit("reset");
+      (this.teachSearch = {
+        level_id: "",
+        attr_val_id: {},
+        is_collect: 0,
+        is_attended: 0,
+        sex: null
+      }),
+        this.$emit("reset");
     },
     onattr(item2, index) {
       this.$set(this.teachSearch.attr_val_id, "attr" + index, item2);

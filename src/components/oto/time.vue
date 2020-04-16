@@ -92,6 +92,7 @@ export default {
   },
   methods: {
     reset(){
+      this.selectTime={}
       this.$emit("reset")
     },
     selectDay(v) {

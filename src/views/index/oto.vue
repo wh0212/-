@@ -23,14 +23,16 @@
         </ul>
       </div>
       <div>
-        <component
-          @condoff="oncondoff"
-          :obj="conditionobj"
-          @off="off"
-          @reset="onreset"
-          :list="otoList"
-          :is="comm"
-        ></component>
+        <keep-alive>
+          <component
+            @condoff="oncondoff"
+            :obj="conditionobj"
+            @off="off"
+            @reset="onreset"
+            :list="otoList"
+            :is="comm"
+          ></component>
+        </keep-alive>
       </div>
     </div>
   </div>
@@ -96,9 +98,13 @@ export default {
       this.conditionobj = res;
     });
   },
+  updated() {
+    if (this.comm == 'Condition') {
+      document.body.style.background = "#fff";
+    }
+  },
   methods: {
     oncondoff(v) {
-      console.log(v);
       this.comm = "TeachList";
       oto(v).then(res => {
         this.otoList = res;
@@ -121,7 +127,6 @@ export default {
       });
     },
     off(v) {
-      console.log(v);
       this.comm = "TeachList";
       this.otoList = v;
       this.opt.map(v => (v.active = false));
