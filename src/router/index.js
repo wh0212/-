@@ -272,6 +272,14 @@ const routes = [
     meta: {
       title: "我的学习卡"
     }
+  },
+  {
+    path: "/Vip",
+    name: "Vip",
+    component: () => import("../views/mine/Vip.vue"),
+    meta: {
+      title: "会员"
+    }
   }
 ]
 

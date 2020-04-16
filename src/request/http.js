@@ -125,6 +125,8 @@ export const goldmx = (data) => thia.$http.get('/coin/item', data)
 export const Coupon = (data) => thia.$http.get('/coupon', data)
 //我的学习卡 /myStudy
 export const myStudy =()=> thia.$http.post('/myStudy')
+//会员
+export const Vip =()=>thia.$http.get('/vip/grade')
 
 //题库选择--科目
 export const pointL = () => thia.$http.get("/wap/classify")
