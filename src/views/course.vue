@@ -43,12 +43,12 @@ export default {
         page: 1,
         order_by: 0,
         course_type: 0,
-        classify_id: null
+        classify_id: 0
       }
     };
   },
   mounted() {
-    document.body.style.background="#f2f3f5"
+    document.body.style.background = "#f2f3f5";
     coursebasis().then(res => {
       this.curseData = res;
       this.finished = false;
@@ -57,7 +57,7 @@ export default {
   methods: {
     onLoad() {
       this.params.page++;
-      coursebasis({page:this.params.page}).then(res => {
+      coursebasis({ page: this.params.page }).then(res => {
         this.loading = false;
         const { current_page, list, last_page } = res;
 
@@ -76,7 +76,6 @@ export default {
       this.$router.push("/search");
     },
     resetfun() {
-    
       this.params = {
         page: 1,
         order_by: 0,
@@ -104,7 +103,6 @@ export default {
     },
     attrId(v) {
       this.params.attr_val_id = v;
-
       coursebasis({ attr_val_id: v }).then(res => {
         this.curseData.list = res.list;
         this.curseData.current_page = res.current_page;

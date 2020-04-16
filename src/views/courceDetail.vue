@@ -89,6 +89,7 @@ export default {
     };
   },
   mounted() {
+    document.documentElement.scrollTop = 0;
     courceId(this.$route.query.id).then(res => {
       this.curce = res.data.data;
     });

@@ -151,7 +151,7 @@ export default {
   mounted() {
     courseify().then(res => {
       const { attrclassify } = res.data.data;
-      console.log(attrclassify);
+      // console.log(attrclassify);
       this.list = attrclassify;
       let attr_val_id = {};
       attrclassify.forEach((item, index) => {

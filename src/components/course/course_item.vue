@@ -43,6 +43,9 @@ export default {
   mounted() {
     console.log(this.data);
   },
+  created(){
+    console.log(this.data);
+  },
   methods: {
     soure_item(v) {
       console.log(v.id);

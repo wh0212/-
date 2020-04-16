@@ -99,11 +99,11 @@ export const mystaus = (type) => thia.$http.get(`/myStudy/${type}`)
 //学习日历
 export const myrili = (data) => thia.$http.get(`/study/live/${data}`)
 // 切换日历月份 /app/study/schedule?date=2019-8-1&
-export const myrlisutdy =(data)=>thia.$http.get(`/study/schedule?date=${data}`)
+export const myrlisutdy = (data) => thia.$http.get(`/study/schedule?date=${data}`)
 //日历 course_type==1
-export const getRoom=(data)=>thia.$http.get(`/oto/getLiveRoomCode/${data}/0`)
+export const getRoom = (data) => thia.$http.get(`/oto/getLiveRoomCode/${data}/0`)
 
-export const getRoomCode =(dataid,chapterID)=>thia.$http.get(`/getPcRoomCode/course_id=${dataid}/chapter_id=${chapterID}`)
+export const getRoomCode = (dataid, chapterID) => thia.$http.get(`/getPcRoomCode/course_id=${dataid}/chapter_id=${chapterID}`)
 
 
 //课程订单
@@ -121,6 +121,10 @@ export const gold = () => thia.$http.get('/coinBalance');
 export const czgold = () => thia.$http.get('/coin/coinRank')
 //金额明细
 export const goldmx = (data) => thia.$http.get('/coin/item', data)
+//优惠券 /coupon?status=0&
+export const Coupon = (data) => thia.$http.get('/coupon', data)
+//我的学习卡 /myStudy
+export const myStudy =()=> thia.$http.post('/myStudy')
 
 //题库选择--科目
 export const pointL = () => thia.$http.get("/wap/classify")
@@ -135,8 +139,8 @@ export const classify = () => thia.$http.get("/exam/classify")
 //套卷选择 /exam/packagePractice?classify_id=8
 export const packageP = (data) => thia.$http.get("/exam/packagePractice", data)
 //仿真考试/exam/packageSimulation
-export const examlist = (data) => thia.$http.get("/exam/packageSimulation",data)
+export const examlist = (data) => thia.$http.get("/exam/packageSimulation", data)
 //错题记录 /myExam/errorRecord?ques_source=-1
-export const errorques =(data)=>thia.$http.post('/myExam/errorRecord',data)
+export const errorques = (data) => thia.$http.post('/myExam/errorRecord', data)
 //测聘记录 /examStatistics/detail
-export const assess =(data)=>thia.$http.get("/examStatistics/detail",data)
+export const assess = (data) => thia.$http.get("/examStatistics/detail", data)

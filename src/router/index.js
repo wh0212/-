@@ -256,6 +256,22 @@ const routes = [
     meta: {
       title: "测评记录"
     }
+  },
+  {
+    path: "/Coupon",
+    name: "Coupon",
+    component: () => import("../views/mine/coupon.vue"),
+    meta: {
+      title: "优惠券"
+    }
+  },
+  {
+    path: "/Card",
+    name: "Card",
+    component: () => import("../views/mine/Card.vue"),
+    meta: {
+      title: "我的学习卡"
+    }
   }
 ]
 
