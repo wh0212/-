@@ -27,7 +27,7 @@
         <div class="btn">
           <van-button color="#fd6614" round block type="info" native-type="submit">登录</van-button>
         </div>
-        <div class="otherLogin">
+        <!-- <div class="otherLogin">
           第三方登录
           <div class="txLogin">
             <div class="wxLogin" @click="qq_wxLogin(1)">
@@ -39,7 +39,7 @@
               <span>QQ登录</span>
             </div>
           </div>
-        </div>
+        </div> -->
       </van-form>
     </div>
   </div>
